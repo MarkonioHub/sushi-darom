@@ -1,0 +1,40 @@
+@import './variables.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: var(--font-family);
+  font-display: block;
+  src: url('../assets/fonts/Qanelas-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: var(--font-family);
+  font-display: block;
+  src: url('../assets/fonts/Qanelas-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family), sans-serif;
+  color: var(--color-primary);
+  font-size: 14px;
+  line-height: 100%;
+}

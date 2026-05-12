@@ -1,0 +1,62 @@
+<script setup lang="ts">
+import { HEADER_NAV } from '@/shared/config';
+</script>
+
+<template>
+  <header
+    class="sticky border-y border-solid border-[color:var(--tertiary-background)] py-[5px] lg:py-[10px]"
+  >
+    <ContainerSite>
+      <div class="mx-[-5px] flex items-center justify-between lg:justify-normal">
+        <div class="cursor-pointer p-[5px] lg:hidden">
+          <IconApp name="app:menu" class-name="w-[24px] h-[24px]" />
+        </div>
+        <NuxtLink to="/" class="order-2 p-[5px] lg:order-none lg:mr-[56px]">
+          <IconApp name="app:logo" class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]" />
+        </NuxtLink>
+        <nav class="hidden lg:block">
+          <ul class="flex gap-[30px]">
+            <li v-for="item in HEADER_NAV" :key="item.text">
+              <NuxtLink v-if="item.to" :to="item.to">
+                {{ item.text }}
+              </NuxtLink>
+              <a v-else-if="item.href" :href="item.href" :target="item.target">
+                {{ item.text }}
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div
+          class="order-1 flex cursor-pointer flex-col items-center p-[5px] lg:order-none lg:ml-auto"
+        >
+          <IconApp
+            name="app:search"
+            class-name="w-[18px] h-[18px] lg:w-[16px] lg:h-[16px] lg:mb-[7px]"
+          />
+          <div class="hidden text-[12px] lg:block">Поиск</div>
+        </div>
+        <div
+          class="order-3 flex cursor-pointer flex-col items-center p-[5px] lg:order-none lg:ml-[40px]"
+        >
+          <IconApp
+            name="app:user"
+            class-name="w-[24px] h-[20px] lg:w-[20px] lg:h-[20px] lg:mb-[5px]"
+          />
+          <div class="hidden text-[12px] lg:block">Профиль</div>
+        </div>
+        <NuxtLink
+          to="/basket"
+          class="order-4 flex flex-col items-center p-[5px] lg:order-none lg:ml-[40px]"
+        >
+          <IconApp
+            name="app:basket"
+            class-name="w-[24px] h-[24px] lg:w-[20px] lg:h-[20px] lg:mb-[5px]"
+          />
+          <div class="hidden text-[12px] lg:block">Корзина</div>
+        </NuxtLink>
+      </div>
+    </ContainerSite>
+  </header>
+</template>
+
+<style scoped></style>

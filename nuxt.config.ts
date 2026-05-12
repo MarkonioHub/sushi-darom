@@ -3,7 +3,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   srcDir: 'src/',
-  components: false,
+  components: [
+    {
+      path: '~/shared/ui/global',
+      pathPrefix: false,
+      global: true,
+    },
+  ],
   alias: {
     '@app': '/src/app',
     '@shared': '/src/shared',
@@ -12,6 +18,38 @@ export default defineNuxtConfig({
     '@widgets': '/src/widgets',
     '@pages': '/src/pages',
   },
-
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt']
-})
+  css: ['@/app/styles/globals.css'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@nuxt/icon',
+    '@nuxt/eslint',
+  ],
+  icon: {
+    customCollections: [
+      {
+        prefix: 'app',
+        dir: './src/shared/assets/icons',
+      },
+    ],
+  },
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg',
+        },
+        {
+          rel: 'alternate icon',
+          href: '/favicon.ico',
+        },
+        {
+          rel: 'apple-touch-icon',
+          href: '/apple-touch-icon.png',
+        },
+      ],
+    },
+  },
+});

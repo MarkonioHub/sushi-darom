@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { SiteHeader } from "@/widgets/site-header";
-import { SiteFooter } from "@/widgets/site-footer";
+import { HeaderAside } from '@/widgets/header-aside';
+import { HeaderSite } from '@/widgets/header-site';
+import { FooterSite } from '@/widgets/footer-site';
 </script>
 
 <template>
   <div class="site">
-    <SiteHeader/>
+    <HeaderAside />
+    <HeaderSite />
     <main>
       <slot />
     </main>
-    <SiteFooter/>
+    <FooterSite />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
