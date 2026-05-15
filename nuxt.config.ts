@@ -4,11 +4,8 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   vite: {
     optimizeDeps: {
-      include: [
-        '@vue/devtools-core',
-        '@vue/devtools-kit'
-      ]
-    }
+      include: ['@vue/devtools-core', '@vue/devtools-kit'],
+    },
   },
   components: [
     {

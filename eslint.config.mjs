@@ -5,6 +5,7 @@ import vuePlugin from 'eslint-plugin-vue';
 
 export default defineConfig([
   {
+    ignores: ['.nuxt/**', 'dist/**'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {

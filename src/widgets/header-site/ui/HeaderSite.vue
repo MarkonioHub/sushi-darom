@@ -1,5 +1,13 @@
 <script setup lang="ts">
   import { HEADER_NAV } from '@/shared/const';
+  import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
+  const mobileMenuStore = useMobileMenuStore();
+  const overlayStore = useOverlayStore();
+
+  function openMenu() {
+    mobileMenuStore.open();
+    overlayStore.open();
+  }
 </script>
 
 <template>
@@ -8,11 +16,15 @@
   >
     <ContainerSite>
       <div class="mx-[-5px] flex items-center justify-between lg:justify-normal">
-        <div class="cursor-pointer p-[5px] lg:hidden">
+        <div class="cursor-pointer p-[5px] lg:hidden" @click="openMenu">
           <IconApp name="app:menu" class-name="w-[24px] h-[24px]" />
         </div>
-        <NuxtLink to="/" class="order-2 p-[5px] lg:order-none lg:mr-[56px]">
-          <IconApp name="app:logo" class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]" />
+        <NuxtLink to="/" class="group order-2 p-[5px] lg:order-none lg:mr-[56px]">
+          <IconApp
+            name="app:logo"
+            class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]
+          duration-[var(--transition-duration)] transition-opacity group-hover:opacity-[0.6]"
+          />
         </NuxtLink>
         <nav class="hidden lg:block">
           <ul class="flex gap-[30px]">

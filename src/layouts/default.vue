@@ -3,6 +3,8 @@
   import { HeaderSite } from '@/widgets/header-site';
   import { FooterSite } from '@/widgets/footer-site';
   import { FooterAside } from '@/widgets/footer-aside';
+  import { MobileMenu } from '@/widgets/mobile-menu';
+  import { OverlaySite } from '@/shared/ui';
 </script>
 
 <template>
@@ -14,6 +16,8 @@
     </main>
     <FooterSite />
     <FooterAside />
+    <MobileMenu />
+    <OverlaySite />
   </div>
 </template>
 

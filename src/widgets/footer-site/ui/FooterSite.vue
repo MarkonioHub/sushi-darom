@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { CONTACTS, SOCIAL_LIST, FOOTER_NAV, MOB_APP } from '@/shared/const';
+  import { useResize } from '@/shared/lib';
 
   const opened = ref<number[]>([]);
   const isDesktop = ref<boolean>();
@@ -8,15 +9,7 @@
     isDesktop.value = window.innerWidth > 768;
   };
 
-  onMounted(() => {
-    checkScreen();
-
-    window.addEventListener('resize', checkScreen);
-  });
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('resize', checkScreen);
-  });
+  useResize(checkScreen, 100);
 
   const accordionShow = computed(() => {
     return (index: number) => {
@@ -42,8 +35,12 @@
         <div
           class="mb-[10px] flex w-[100%] flex-col sm:mb-0 sm:w-[40%] md:order-1 lg:order-none lg:size-auto"
         >
-          <NuxtLink to="/" class="mb-[15px] ml-[-5px] p-[5px] sm:mb-[30px]">
-            <IconApp name="app:logo" class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]" />
+          <NuxtLink to="/" class="group mb-[15px] ml-[-5px] p-[5px] sm:mb-[30px]">
+            <IconApp
+              name="app:logo"
+              class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]
+            duration-[var(--transition-duration)] transition-opacity group-hover:opacity-[0.6]"
+            />
           </NuxtLink>
           <a
             :href="`tel:${CONTACTS.phone}`"
@@ -57,8 +54,18 @@
             (время Московское)
           </div>
           <div class="flex justify-center gap-[10px] md:justify-normal">
-            <a v-for="item in SOCIAL_LIST" :key="item.icon" :href="item.href" target="_blank">
-              <IconApp :name="`app:${item.icon}`" class-name="w-[32px] h-[32px]" />
+            <a
+              v-for="item in SOCIAL_LIST"
+              :key="item.icon"
+              :href="item.href"
+              target="_blank"
+              class="group"
+            >
+              <IconApp
+                :name="`app:${item.icon}`"
+                class-name="w-[32px] h-[32px]
+              duration-[var(--transition-duration)] transition-opacity group-hover:opacity-[0.6]"
+              />
             </a>
           </div>
         </div>
