@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { contacts } from '@/shared/const';
+  import { CONTACTS } from '@/shared/const';
 </script>
 
 <template>
@@ -8,7 +8,9 @@ import { contacts } from '@/shared/const';
       <div
         class="flex flex-wrap items-center justify-between gap-[0_20px] py-[10px] lg:py-0 xl:gap-[60px]"
       >
-        <div class="hidden cursor-pointer items-center gap-[8px] py-[10px] lg:flex">
+        <div
+          class="hidden cursor-pointer items-center gap-[8px] py-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)] lg:flex"
+        >
           <IconApp name="app:location" class-name="text-[12px]" />
           Краснодар
         </div>
@@ -21,13 +23,19 @@ import { contacts } from '@/shared/const';
         <div class="font-semibold text-[var(--color-secondary)]">
           Среднее время ожидания: 30 минут
         </div>
-        <NuxtLink to="/" class="hidden items-center gap-[8px] lg:flex xl:ml-auto">
+        <NuxtLink
+          to="/"
+          class="hidden items-center gap-[8px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)] lg:flex lg:py-[10px] xl:ml-auto"
+        >
           <IconApp name="app:chat" class-name="text-[12px]" />
           Оставить отзыв
         </NuxtLink>
-        <a :href="`tel:${contacts.phone}`" class="hidden items-center gap-[8px] lg:flex">
+        <a
+          :href="`tel:${CONTACTS.phone}`"
+          class="hidden items-center gap-[8px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)] lg:flex lg:py-[10px]"
+        >
           <IconApp name="app:phone" class-name="text-[12px]" />
-          {{ contacts.phone }}
+          {{ CONTACTS.phone }}
         </a>
       </div>
     </ContainerSite>

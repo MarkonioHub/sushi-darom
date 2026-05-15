@@ -1,32 +1,36 @@
 {
-  "name": "client",
-  "type": "module",
+  "name": "sushi-darom",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "format": "prettier . --write",
+    "build": "nuxt build",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "@nuxt/eslint": "^1.15.2",
     "@nuxt/icon": "^2.2.2",
-    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@nuxt/image": "^2.0.0",
     "@pinia/nuxt": "^0.11.3",
-    "@prisma/client": "^7.8.0",
-    "nuxt": "^4.4.4",
     "pinia": "^3.0.4",
-    "vue": "^3.5.33",
-    "vue-router": "^5.0.6"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "eslint": "^10.3.0",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "autoprefixer": "^10.5.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-define-config": "^2.1.0",
+    "eslint-plugin-vue": "^9.18.0",
+    "nuxt": "^4.4.5",
+    "postcss": "^8.5.14",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "prisma": "^7.8.0"
+    "prisma": "^7.8.0",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^6.0.3"
   }
 }

@@ -2,7 +2,7 @@
 
 <template>
   <div class="admin">
-    <slot/>
+    <slot />
   </div>
 </template>
 

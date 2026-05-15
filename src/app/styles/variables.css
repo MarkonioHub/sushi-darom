@@ -3,4 +3,7 @@
   --color-primary: #000000;
   --color-secondary: #727281;
   --tertiary-background: #dfe0e5;
+  --primary-background: #f9f9f9;
+  --disabled-content: #bebec9;
+  --transition-duration: 0.3s;
 }

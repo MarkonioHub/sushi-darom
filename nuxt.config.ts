@@ -1,8 +1,15 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   srcDir: 'src/',
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit'
+      ]
+    }
+  },
   components: [
     {
       path: '~/shared/ui/global',
@@ -19,12 +26,7 @@ export default defineNuxtConfig({
     '@pages': '/src/pages',
   },
   css: ['@/app/styles/globals.css'],
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@pinia/nuxt',
-    '@nuxt/icon',
-    '@nuxt/eslint',
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/icon', '@nuxt/image'],
   icon: {
     customCollections: [
       {
