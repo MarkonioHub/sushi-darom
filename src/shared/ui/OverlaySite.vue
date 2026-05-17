@@ -1,11 +1,13 @@
 <script setup lang="ts">
-  import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
+  import { useMobileMenuStore, useModalStore, useOverlayStore } from '@/shared/model';
   const overlayStore = useOverlayStore();
   const mobileMenuStore = useMobileMenuStore();
+  const modalStore = useModalStore();
 
   function close() {
     mobileMenuStore.close();
     overlayStore.close();
+    modalStore.close();
   }
 </script>
 
@@ -13,7 +15,7 @@
   <transition name="fade">
     <div
       v-show="overlayStore.visible"
-      class="fixed inset-0 z-[999] cursor-pointer bg-[rgba(0,0,0,0.7)]"
+      class="fixed inset-0 z-[999] cursor-pointer bg-[rgba(19,23,27,0.4)]"
       @click="close"
     ></div>
   </transition>

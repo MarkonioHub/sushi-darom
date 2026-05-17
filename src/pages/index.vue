@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { PromoSlider } from '@/widgets/promo-slider';
+
   useSeoMeta({
     title: 'Заказать доставку роллов в Краснодаре',
     description:
@@ -7,7 +9,7 @@
 </script>
 
 <template>
-  <h1>home</h1>
+  <PromoSlider />
 </template>
 
 <style scoped></style>

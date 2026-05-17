@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     '@pages': '/src/pages',
   },
   css: ['@/app/styles/globals.css'],
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/icon', '@nuxt/image'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/icon', '@nuxt/image', 'nuxt-swiper'],
   icon: {
     customCollections: [
       {

@@ -5,6 +5,7 @@
   import { FooterAside } from '@/widgets/footer-aside';
   import { MobileMenu } from '@/widgets/mobile-menu';
   import { OverlaySite } from '@/shared/ui';
+  import { ModalBase } from '@/shared/ui/';
 </script>
 
 <template>
@@ -18,6 +19,7 @@
     <FooterAside />
     <MobileMenu />
     <OverlaySite />
+    <ModalBase />
   </div>
 </template>
 
