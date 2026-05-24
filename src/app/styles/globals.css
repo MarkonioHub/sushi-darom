@@ -37,5 +37,13 @@ body {
   font-family: var(--font-family), sans-serif;
   color: var(--color-primary);
   font-size: 14px;
-  line-height: 100%;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

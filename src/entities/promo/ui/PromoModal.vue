@@ -5,8 +5,8 @@
 
 <template>
   <div>
-    <NuxtImg src="examples/promo-horizontal.png"></NuxtImg>
-    <div class="p-[30px]">
+    <NuxtImg src="examples/promo-horizontal.png" class="h-[294px]"></NuxtImg>
+    <div class="h-[calc(100%-294px)] overflow-y-auto p-[30px]">
       <div class="mb-[20px] text-[20px] font-[600] leading-[24px] lg:text-[32px] lg:leading-[38px]">
         УСПЕЙ ВЗЯТЬ ЭКСКЛЮЗИВ!
       </div>

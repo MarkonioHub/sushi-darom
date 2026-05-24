@@ -12,7 +12,17 @@
 
 <template>
   <header
-    class="sticky border-y border-solid border-[color:var(--tertiary-background)] py-[5px] lg:py-[10px]"
+    :class="[
+      'sticky',
+      'top-0',
+      'z-[10]',
+      'border-y',
+      'border-solid',
+      'border-[color:var(--tertiary-background)]',
+      'bg-[#ffffff]',
+      'lg:py-[5px]',
+      'py-[12px]',
+    ]"
   >
     <ContainerSite>
       <div class="mx-[-5px] flex items-center justify-between lg:justify-normal">

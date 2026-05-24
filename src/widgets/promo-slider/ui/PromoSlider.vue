@@ -80,7 +80,7 @@
 </script>
 
 <template>
-  <div class="my-[30px]">
+  <section class="my-[30px]">
     <ContainerSite>
       <div class="group relative">
         <button
@@ -169,7 +169,7 @@
         </ClientOnly>
       </div>
     </ContainerSite>
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

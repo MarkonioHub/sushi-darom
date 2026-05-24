@@ -4,7 +4,9 @@
   --color-secondary: #727281;
   --tertiary-background: #dfe0e5;
   --primary-background: #f9f9f9;
+  --secondary-background: #f4f5f6;
   --disabled-content: #bebec9;
   --transition-duration: 0.3s;
   --placeholder-content: #a8a8b4;
+  --header-height: 65px;
 }
