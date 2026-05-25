@@ -1,1 +1,1 @@
-export { default as PromoModal } from './ui/PromoModal.vue';
+export { usePromoModal } from './hooks/usePromoModal';

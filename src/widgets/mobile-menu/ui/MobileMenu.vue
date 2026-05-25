@@ -86,7 +86,7 @@
 <style scoped>
   .left-enter-active,
   .left-leave-active {
-    transition: transform 0.25s ease;
+    transition: transform var(--transition-duration) ease;
   }
   .left-enter-from,
   .left-leave-to {

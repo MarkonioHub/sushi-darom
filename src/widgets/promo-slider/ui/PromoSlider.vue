@@ -1,29 +1,15 @@
 <script setup lang="ts">
-  import { PromoModal } from '@/entities/promo';
-  import { useModalStore } from '@/shared/model';
   import type { SwiperContainer } from 'swiper/element';
+  import { usePromoModal } from '@/entities/promo';
 
-  const modalStore = useModalStore();
-  const route = useRoute();
-  const router = useRouter();
   const containerRef = useTemplateRef<SwiperContainer>('containerRef');
   const disablePrev = ref(true);
   const disableNext = ref(false);
 
-  watch(
-    () => route.query.promo,
-
-    (promo) => {
-      if (promo) {
-        modalStore.open(PromoModal, 'max-w-[744px]');
-      }
-    }
-  );
+  const { pushQuery } = usePromoModal();
 
   onMounted(async () => {
     await nextTick();
-
-    if (route.query.promo) modalStore.open(PromoModal, 'max-w-[744px]');
 
     const swiperElement = containerRef.value;
 
@@ -68,15 +54,6 @@
       disableNext.value = swiper.isEnd;
     }
   });
-
-  function pushQuery(slug: string) {
-    router.replace({
-      query: {
-        ...route.query,
-        promo: slug,
-      },
-    });
-  }
 </script>
 
 <template>
@@ -157,13 +134,12 @@
               :key="idx"
               class="!w-[200px] lg:!w-[20%]"
             >
-              <NuxtLink
-                to="/?promo=1"
-                class="block overflow-hidden rounded-[16px]"
+              <div
+                class="block cursor-pointer overflow-hidden rounded-[16px]"
                 @click="pushQuery('1')"
               >
                 <NuxtImg src="/examples/promo-vertical.png"></NuxtImg>
-              </NuxtLink>
+              </div>
             </swiper-slide>
           </swiper-container>
         </ClientOnly>

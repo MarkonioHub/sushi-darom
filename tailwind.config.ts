@@ -17,4 +17,8 @@ export default <Partial<Config>>{
   },
 
   plugins: [],
+
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 };

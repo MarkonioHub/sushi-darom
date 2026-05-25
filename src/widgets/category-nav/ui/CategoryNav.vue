@@ -4,9 +4,9 @@
 </script>
 
 <template>
-  <div class="mb-[10px] lg:mb-[16px]">
+  <div class="mb-[10px] scroll-mt-[var(--header-height)] lg:mb-[16px]" id="menu">
     <ContainerSite>
-      <div id="menu" class="text-[24px] font-[600] lg:text-[32px]">Меню</div>
+      <div class="text-[24px] font-[600] lg:text-[32px]">Меню</div>
     </ContainerSite>
   </div>
   <div class="sticky top-[var(--header-height)] z-[10] bg-[#ffffff] p-[0_0_10px] lg:py-[10px]">

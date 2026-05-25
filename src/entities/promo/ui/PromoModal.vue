@@ -4,13 +4,31 @@
 </script>
 
 <template>
-  <div>
-    <NuxtImg src="examples/promo-horizontal.png" class="h-[294px]"></NuxtImg>
-    <div class="h-[calc(100%-294px)] overflow-y-auto p-[30px]">
-      <div class="mb-[20px] text-[20px] font-[600] leading-[24px] lg:text-[32px] lg:leading-[38px]">
+  <div :class="['flex', 'flex-col']">
+    <NuxtImg src="examples/promo-horizontal.png"></NuxtImg>
+    <div class="grow overflow-y-auto p-[15px] lg:p-[30px]">
+      <div
+        :class="[
+          'mb-[10px]',
+          'text-[14px]',
+          'font-[600]',
+          'leading-[20px]',
+          'lg:mb-[20px]',
+          'lg:text-[32px]',
+          'lg:leading-[38px]',
+        ]"
+      >
         УСПЕЙ ВЗЯТЬ ЭКСКЛЮЗИВ!
       </div>
-      <div class="text-[16px] leading-[18px] text-[var(--color-secondary)]">
+      <div
+        :class="[
+          'text-[12px]',
+          'leading-[16px]',
+          'text-[var(--color-secondary)]',
+          'lg:text-[16px]',
+          'lg:leading-[18px]',
+        ]"
+      >
         Мы собрали все ваши любимые роллы в один Фирменный сет и добавили то, чего нет ни у кого.
         Нет, это не просто соус😍 Это — те самые черные сувенирные палочки от СУШИ ДАРОМ💞
         Эксклюзив, который невозможно купить отдельно. 💥 48 топовых роллов: от классики с лососем

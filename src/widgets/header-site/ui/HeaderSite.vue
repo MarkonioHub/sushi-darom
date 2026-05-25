@@ -29,7 +29,7 @@
         <div class="cursor-pointer p-[5px] lg:hidden" @click="openMenu">
           <IconApp name="app:menu" class-name="w-[24px] h-[24px]" />
         </div>
-        <NuxtLink to="/" class="group order-2 p-[5px] lg:order-none lg:mr-[56px]">
+        <NuxtLink to="/" class="group order-2 flex items-center p-[5px] lg:order-none lg:mr-[56px]">
           <IconApp
             name="app:logo"
             class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]

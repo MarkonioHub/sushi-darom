@@ -6,19 +6,19 @@ export const useModalStore = defineStore('modal', () => {
   const overlayStore = useOverlayStore();
   const isOpen = ref(false);
   const component = shallowRef(null);
-  const className = ref<string>('');
+  const size = ref<string>('');
 
-  function open(modalComponent: any, modalClassName: string) {
+  function open(modalComponent: any, modalSize: string) {
     component.value = modalComponent;
     isOpen.value = true;
-    className.value = modalClassName;
+    size.value = modalSize;
     overlayStore.open();
   }
 
   function close() {
     component.value = null;
     isOpen.value = false;
-    className.value = '';
+    size.value = '';
     overlayStore.close();
     const query = { ...route.query };
     delete query.promo;
@@ -30,6 +30,6 @@ export const useModalStore = defineStore('modal', () => {
     close,
     isOpen,
     component,
-    className,
+    size,
   };
 });
