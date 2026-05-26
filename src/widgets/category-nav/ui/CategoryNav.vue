@@ -1,6 +1,39 @@
 <script setup lang="ts">
   import { useDragScroll } from '@/shared/lib';
-  const { element, pointerDown, pointerMove, pointerUp } = useDragScroll();
+  const route = useRoute();
+  const { element, isDragging, pointerDown, pointerMove, pointerUp } = useDragScroll();
+  const tabs = new Map<string, HTMLElement>();
+  const tabsContainer = useTemplateRef('element');
+
+  function scrollToCategory(slug: string) {
+    const element = document.getElementById(slug);
+    if (!element) return;
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  const activeSlug = computed(() => {
+    return typeof route.query.category === 'string' ? route.query.category : '';
+  });
+
+  function setCategoryTab(el: Element | ComponentPublicInstance | null, slug: string) {
+    if (!el) return;
+    tabs.set(slug, el as HTMLElement);
+  }
+
+  watch(activeSlug, (newVal) => {
+    if (!newVal) return;
+    const tab = tabs.get(newVal);
+    if (!tab || !tabsContainer.value) return;
+
+    const tabsContainerCenter = tabsContainer.value.clientWidth / 2;
+    const tabCenter = tab.clientWidth / 2;
+    const targetScrollLeft = tab.offsetLeft - tabsContainerCenter + tabCenter;
+
+    tabsContainer.value.scrollTo({
+      left: targetScrollLeft,
+      behavior: 'smooth',
+    });
+  });
 </script>
 
 <template>
@@ -34,16 +67,19 @@
           <li
             v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
             :key="index"
+            @click="!isDragging && scrollToCategory(`slug-${item}`)"
+            :ref="(el) => setCategoryTab(el, `slug-${item}`)"
             :class="[
-              'bg-[var(--secondary-background)]',
               'p-[8px_16px]',
               'rounded-[24px]',
               'text-[16px]',
-              'hover:bg-[var(--tertiary-background)]',
               'transition-colors',
               'duration-[var(--transition-duration)]',
               'cursor-pointer',
               'shrink-0',
+              activeSlug === `slug-${item}`
+                ? 'bg-[var(--color-primary)] text-white'
+                : 'bg-[var(--secondary-background)] hover:bg-[var(--tertiary-background)]',
             ]"
           >
             Категория {{ item }}

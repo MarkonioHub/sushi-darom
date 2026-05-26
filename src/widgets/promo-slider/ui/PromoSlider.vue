@@ -59,7 +59,7 @@
 <template>
   <section class="my-[30px]">
     <ContainerSite>
-      <div class="group relative">
+      <div class="group relative min-h-[290px] lg:min-h-[415px]">
         <button
           :class="[
             'hidden',
@@ -132,7 +132,7 @@
             <swiper-slide
               v-for="(slide, idx) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
               :key="idx"
-              class="!w-[200px] lg:!w-[20%]"
+              class="!w-[200px] lg:!w-[300px]"
             >
               <div
                 class="block cursor-pointer overflow-hidden rounded-[16px]"

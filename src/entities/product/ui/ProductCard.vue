@@ -29,6 +29,8 @@
         'group-hover:translate-y-[-5px]',
         'transition-transform',
         'duration-[0.4s]',
+        'transform-gpu',
+        'will-change-transform',
       ]"
     >
       <NuxtLink to="#" :class="['text-[24px]', 'font-[600]', 'mb-[8px]']">Сет Сетотерапия</NuxtLink>
