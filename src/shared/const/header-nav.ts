@@ -1,6 +1,7 @@
 interface HeaderNavTo {
   text: string;
   to: string;
+  hash?: string;
 }
 
 interface HeaderNavHref {
@@ -9,9 +10,8 @@ interface HeaderNavHref {
 }
 
 export const HEADER_NAV = [
-  { text: 'Меню', to: '/#menu' },
+  { text: 'Меню', to: '/', hash: 'menu' },
   { text: 'Акции', to: '/promo' },
   { text: 'Доставка', to: '/delivery' },
   { text: 'О нас', to: '/about' },
-  { text: 'Вакансии', href: '#' },
 ] satisfies Array<HeaderNavTo | HeaderNavHref>;

@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  srcDir: 'src/',
+  srcDir: 'src',
   vite: {
     optimizeDeps: {
       include: ['@vue/devtools-core', '@vue/devtools-kit'],
@@ -23,7 +23,22 @@ export default defineNuxtConfig({
     '@pages': '/src/pages',
   },
   css: ['@/app/styles/globals.css'],
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/icon', '@nuxt/image', 'nuxt-swiper'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@nuxt/icon',
+    '@nuxt/image',
+    'nuxt-swiper',
+    'vue-yandex-maps/nuxt',
+  ],
+  yandexMaps: {
+    apikey: import.meta.env.NUXT_PUBLIC_YANDEX_MAPS_API_KEY,
+  },
+  runtimeConfig: {
+    public: {
+      yandexMapsApiKey: '',
+    },
+  },
   icon: {
     customCollections: [
       {

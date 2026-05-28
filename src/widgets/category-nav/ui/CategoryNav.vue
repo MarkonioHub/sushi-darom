@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import { useDragScroll } from '@/shared/lib';
-  const route = useRoute();
   const { element, isDragging, pointerDown, pointerMove, pointerUp } = useDragScroll();
+  const route = useRoute();
+
   const tabs = new Map<string, HTMLElement>();
   const tabsContainer = useTemplateRef('element');
 

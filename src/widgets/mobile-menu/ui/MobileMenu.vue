@@ -1,7 +1,9 @@
 <script setup lang="ts">
   import { CONTACTS, HEADER_NAV } from '@/shared/const';
   import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
-  import { useResize } from '~/shared/lib';
+  import { useResize } from '@/shared/lib';
+  import { LogoSite } from '@/shared/ui';
+
   const mobileMenuStore = useMobileMenuStore();
   const overlayStore = useOverlayStore();
 
@@ -26,19 +28,14 @@
       <button class="absolute right-[10px] top-[10px] rotate-45 p-[10px]" @click="closeMenu">
         <IconApp name="app:plus" class-name="w-[20px] h-[20px]" />
       </button>
-      <NuxtLink to="/" class="group mb-[30px] ml-[-8px] inline-block">
-        <IconApp
-          name="app:logo"
-          class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]
-          duration-[var(--transition-duration)] transition-opacity group-hover:opacity-[0.6]"
-        />
-      </NuxtLink>
+      <LogoSite :class="['inline-block', 'mb-[30px]', 'ml-[-8px]']" />
       <nav>
         <ul class="flex flex-col gap-[25px]">
           <li v-for="item in HEADER_NAV" :key="item.text">
             <NuxtLink
               v-if="'to' in item"
               :to="item.to"
+              @click="closeMenu"
               class="ml-[-10px] p-[10px] text-[16px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
             >
               {{ item.text }}
@@ -46,6 +43,7 @@
             <a
               v-else
               :href="item.href"
+              @click="closeMenu"
               target="_blank"
               rel="noreferrer"
               class="ml-[-10px] p-[10px] text-[16px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"

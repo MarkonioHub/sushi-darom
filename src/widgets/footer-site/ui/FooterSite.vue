@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { CONTACTS, SOCIAL_LIST, FOOTER_NAV, MOB_APP } from '@/shared/const';
   import { useResize } from '@/shared/lib';
+  import { LogoSite } from '~/shared/ui';
 
   const opened = ref<number[]>([]);
   const isDesktop = ref<boolean>();
@@ -35,13 +36,7 @@
         <div
           class="mb-[10px] flex w-[100%] flex-col sm:mb-0 sm:w-[40%] md:order-1 lg:order-none lg:size-auto"
         >
-          <NuxtLink to="/" class="group mb-[15px] ml-[-5px] p-[5px] sm:mb-[30px]">
-            <IconApp
-              name="app:logo"
-              class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]
-            duration-[var(--transition-duration)] transition-opacity group-hover:opacity-[0.6]"
-            />
-          </NuxtLink>
+          <LogoSite :class="['mb-[15px]', 'ml-[-5px]', 'sm:mb-[30px]']" />
           <a
             :href="`tel:${CONTACTS.phone}`"
             class="mb-[10px] text-[20px] font-[600] leading-[24px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)] sm:mb-[20px]"

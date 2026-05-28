@@ -1,6 +1,10 @@
 <script setup lang="ts">
   import { HEADER_NAV } from '@/shared/const';
+  import { LogoSite } from '@/shared/ui';
+  import { useAnchorScroll } from '@/shared/lib';
   import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
+
+  const { navigateToAnchorScroll } = useAnchorScroll();
   const mobileMenuStore = useMobileMenuStore();
   const overlayStore = useOverlayStore();
 
@@ -29,18 +33,19 @@
         <div class="cursor-pointer p-[5px] lg:hidden" @click="openMenu">
           <IconApp name="app:menu" class-name="w-[24px] h-[24px]" />
         </div>
-        <NuxtLink to="/" class="group order-2 flex items-center p-[5px] lg:order-none lg:mr-[56px]">
-          <IconApp
-            name="app:logo"
-            class-name="w-[161px] h-[18px] sm:w-[197px] sm:h-[22px]
-          duration-[var(--transition-duration)] transition-opacity group-hover:opacity-[0.6]"
-          />
-        </NuxtLink>
+        <LogoSite :class="['lg:order-none', 'lg:mr-[56px]', 'order-2']" />
         <nav class="hidden lg:block">
           <ul class="flex gap-[30px]">
-            <li v-for="item in HEADER_NAV" :key="item.text">
+            <li v-for="item in HEADER_NAV" :key="item.text" :class="['flex']">
+              <button
+                v-if="item.hash"
+                @click="navigateToAnchorScroll(item.to, item.hash)"
+                class="p-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
+              >
+                {{ item.text }}
+              </button>
               <NuxtLink
-                v-if="'to' in item"
+                v-else-if="'to' in item"
                 :to="item.to"
                 class="p-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
               >

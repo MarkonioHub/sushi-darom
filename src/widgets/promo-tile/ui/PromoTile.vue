@@ -7,7 +7,7 @@
 <template>
   <div class="[mb-[80px]]">
     <ContainerSite>
-      <h1 :class="['text-[40px]', 'font-[600]', 'mb-[30px]']">Акции</h1>
+      <h1 :class="['lg:text-[40px]', 'font-[600]', 'mb-[30px]', 'text-[30px]']">Акции</h1>
       <div :class="['flex', 'flex-wrap', 'sm:gap-[20px]', 'gap-[10px]']">
         <div
           @click="pushQuery('1')"
