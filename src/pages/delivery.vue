@@ -3,8 +3,8 @@
   import { DeliveryInfo } from '@/widgets/delivery-info';
 
   useSeoMeta({
-    title: 'Доставка и самовывоз Roll House в Краснодаре',
-    description: 'Информация о доставке и самовывозе Roll House в Краснодаре',
+    title: 'Доставка и самовывоз Суши Даром в Краснодаре',
+    description: 'Информация о доставке и самовывозе Суши Даром в Краснодаре',
   });
 
   definePageMeta({

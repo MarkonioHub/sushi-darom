@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { CONTACTS, HEADER_NAV } from '@/shared/const';
+  import { CONTACTS, HEADER_NAV } from '@/shared/lib';
   import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
   import { useResize } from '@/shared/lib';
   import { LogoSite } from '@/shared/ui';

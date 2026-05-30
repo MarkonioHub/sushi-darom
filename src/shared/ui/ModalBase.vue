@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useModalStore } from '@/shared/model/modalStore';
+  import { useModalStore } from '@/shared/model';
   const modalStore = useModalStore();
 
   const onKeydown = (e: KeyboardEvent) => {

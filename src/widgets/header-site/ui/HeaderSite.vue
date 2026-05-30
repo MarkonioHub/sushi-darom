@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { HEADER_NAV } from '@/shared/const';
+  import { HEADER_NAV } from '@/shared/lib';
   import { LogoSite } from '@/shared/ui';
   import { useAnchorScroll } from '@/shared/lib';
   import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
@@ -19,7 +19,7 @@
     :class="[
       'sticky',
       'top-0',
-      'z-[10]',
+      'z-[20]',
       'border-y',
       'border-solid',
       'border-[color:var(--tertiary-background)]',
@@ -38,14 +38,14 @@
           <ul class="flex gap-[30px]">
             <li v-for="item in HEADER_NAV" :key="item.text" :class="['flex']">
               <button
-                v-if="item.hash"
+                v-if="item.type === 'button'"
                 @click="navigateToAnchorScroll(item.to, item.hash)"
                 class="p-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
               >
                 {{ item.text }}
               </button>
               <NuxtLink
-                v-else-if="'to' in item"
+                v-else-if="item.type === 'link'"
                 :to="item.to"
                 class="p-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
               >

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { CONTACTS, SOCIAL_LIST, FOOTER_NAV, MOB_APP } from '@/shared/const';
+  import { CONTACTS, SOCIAL_LIST, FOOTER_NAV, MOB_APP } from '@/shared/lib';
   import { useResize } from '@/shared/lib';
   import { LogoSite } from '~/shared/ui';
 
@@ -36,7 +36,15 @@
         <div
           class="mb-[10px] flex w-[100%] flex-col sm:mb-0 sm:w-[40%] md:order-1 lg:order-none lg:size-auto"
         >
-          <LogoSite :class="['mb-[15px]', 'ml-[-5px]', 'sm:mb-[30px]']" />
+          <LogoSite
+            :class="[
+              'mb-[15px]',
+              'ml-[-5px]',
+              'sm:mb-[30px]',
+              'justify-center',
+              'md:justify-start',
+            ]"
+          />
           <a
             :href="`tel:${CONTACTS.phone}`"
             class="mb-[10px] text-[20px] font-[600] leading-[24px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)] sm:mb-[20px]"
@@ -86,7 +94,7 @@
             <div v-show="accordionShow(index)" class="flex flex-col">
               <template v-for="item in box.list">
                 <NuxtLink
-                  v-if="'to' in item"
+                  v-if="item.type === 'link'"
                   :key="item.to"
                   :to="item.to"
                   class="p-[8px] text-[16px] leading-[20px] text-[var(--color-secondary)] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-primary)] md:ml-[-8px]"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { CONTACTS } from '@/shared/const';
+  import { CONTACTS } from '@/shared/lib';
   import { MapDelivery } from '@/shared/ui';
 
   const pickupList = [

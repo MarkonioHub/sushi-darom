@@ -3,8 +3,8 @@
   import { BreadCrumbs } from '@/shared/ui';
 
   useSeoMeta({
-    title: 'Акции Roll House в Краснодаре',
-    description: 'Не упустите выгодные акции от Roll House в Краснодаре.',
+    title: 'Акции Суши Даром в Краснодаре',
+    description: 'Не упустите выгодные акции от Суши Даром в Краснодаре.',
   });
 
   definePageMeta({
