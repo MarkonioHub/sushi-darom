@@ -16,9 +16,7 @@ export function usePromoModal() {
     }
   );
 
-  onMounted(async () => {
-    await nextTick();
-
+  onMounted(() => {
     if (route.query.promo) modalStore.open(PromoModal, 'promo');
   });
 

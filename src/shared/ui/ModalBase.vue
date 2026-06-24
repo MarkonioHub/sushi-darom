@@ -18,50 +18,60 @@
 
   const modalWidths: Record<string, string> = {
     promo: 'max-w-[744px]',
+    review: 'max-w-[584px]',
   };
 
   const className = computed(() => [
-    modalWidths[modalStore.size],
     'fixed',
-    'bottom-[0]',
-    'lg:left-[50%]',
-    'top-[50px]',
+    'left-[0]',
+    'top-[0]',
     'z-[1001]',
     'w-[100%]',
-    'lg:translate-x-[-50%]',
-    'left-0',
-    'right-0',
+    'h-[100%]',
+    'flex',
+    'lg:items-center',
+    'items-end',
+    'justify-center',
     'overflow-hidden',
-    'rounded-[16px_16px_0_0]',
-    'bg-[#ffffff]',
-    'lg:bottom-[70px]',
-    'lg:top-[70px]',
-    'lg:rounded-[16px]',
+    'pointer-events-none',
   ]);
 </script>
 
 <template>
   <Transition name="fade">
     <div v-if="modalStore.isOpen" :class="className">
-      <button
-        @click="modalStore.close"
+      <div
         :class="[
-          'absolute',
-          'right-[20px]',
-          'top-[20px]',
-          'z-[1]',
-          'flex',
-          'h-[25px]',
-          'w-[25px]',
-          'items-center',
-          'justify-center',
-          'rounded-[50%]',
+          modalWidths[modalStore.size],
+          'rounded-[16px_16px_0_0]',
           'bg-[#ffffff]',
+          'lg:rounded-[16px]',
+          'relative',
+          'max-h-[80vh]',
+          'overflow-y-auto',
+          'pointer-events-auto',
         ]"
       >
-        <IconApp name="app:plus" class-name="w-[18px] h-[18px] rotate-45" />
-      </button>
-      <component :is="modalStore.component" class="h-[100%] overflow-y-auto" />
+        <button
+          @click="modalStore.close"
+          :class="[
+            'absolute',
+            'right-[20px]',
+            'top-[20px]',
+            'z-[1]',
+            'flex',
+            'h-[25px]',
+            'w-[25px]',
+            'items-center',
+            'justify-center',
+            'rounded-[50%]',
+            'bg-[#ffffff]',
+          ]"
+        >
+          <IconApp name="app:plus" class="h-[18px] w-[18px] rotate-45" />
+        </button>
+        <component :is="modalStore.component" :class="['max-h-[80vh]']" />
+      </div>
     </div>
   </Transition>
 </template>

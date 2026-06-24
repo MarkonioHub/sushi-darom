@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   srcDir: 'src',
   vite: {
     optimizeDeps: {
-      include: ['@vue/devtools-core', '@vue/devtools-kit'],
+      include: ['@vue/devtools-core', '@vue/devtools-kit', 'zod', 'maska/vue', '@vee-validate/zod'],
     },
   },
   components: [
@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-swiper',
     'vue-yandex-maps/nuxt',
+    '@vee-validate/nuxt',
   ],
   yandexMaps: {
     apikey: import.meta.env.NUXT_PUBLIC_YANDEX_MAPS_API_KEY,

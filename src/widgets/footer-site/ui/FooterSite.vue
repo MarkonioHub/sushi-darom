@@ -66,8 +66,7 @@
             >
               <IconApp
                 :name="`app:${item.icon}`"
-                class-name="w-[32px] h-[32px]
-              duration-[var(--transition-duration)] transition-opacity group-hover:opacity-[0.6]"
+                class="h-[32px] w-[32px] transition-opacity duration-[var(--transition-duration)] group-hover:opacity-[0.6]"
               />
             </a>
           </div>
@@ -84,8 +83,8 @@
             {{ box.title }}
             <IconApp
               name="app:plus"
-              :class-name="
-                'w-[14px] h-[14px] md:hidden transition-transform duration-[var(--transition-duration)] ' +
+              :class="
+                'h-[14px] w-[14px] transition-transform duration-[var(--transition-duration)] md:hidden ' +
                 `${accordionShow(index) ? ' rotate-45' : ''}`
               "
             />
@@ -132,13 +131,13 @@
               >
                 <IconApp
                   :name="`app:${item.iconDesk}`"
-                  class-name="w-[100px] h-[32px] 2xl:block hidden mb-[10px]"
+                  class="mb-[10px] hidden h-[32px] w-[100px] 2xl:block"
                 />
-                <IconApp :name="`app:${item.iconMob}`" class-name="w-[128px] h-[32px] 2xl:hidden" />
+                <IconApp :name="`app:${item.iconMob}`" class="h-[32px] w-[128px] 2xl:hidden" />
               </a>
             </div>
             <div class="ml-auto mt-[-60px] 2xl:ml-0 2xl:mt-0">
-              <IconApp name="app:app-qr" class-name="w-[200px] h-[200px] lg:block hidden" />
+              <IconApp name="app:app-qr" class="hidden h-[200px] w-[200px] lg:block" />
             </div>
           </div>
         </div>

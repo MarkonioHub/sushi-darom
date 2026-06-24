@@ -31,7 +31,7 @@
     <ContainerSite>
       <div class="mx-[-5px] flex items-center justify-between lg:justify-normal">
         <div class="cursor-pointer p-[5px] lg:hidden" @click="openMenu">
-          <IconApp name="app:menu" class-name="w-[24px] h-[24px]" />
+          <IconApp name="app:menu" class="h-[24px] w-[24px]" />
         </div>
         <LogoSite :class="['lg:order-none', 'lg:mr-[56px]', 'order-2']" />
         <nav class="hidden lg:block">
@@ -68,7 +68,7 @@
         >
           <IconApp
             name="app:search"
-            class-name="w-[18px] h-[18px] lg:w-[16px] lg:h-[16px] lg:mb-[7px]"
+            class="h-[18px] w-[18px] lg:mb-[7px] lg:h-[16px] lg:w-[16px]"
           />
           <div
             class="hidden text-[12px] transition-colors duration-[var(--transition-duration)] group-hover:text-[var(--color-secondary)] lg:block"
@@ -79,10 +79,7 @@
         <div
           class="group order-3 flex cursor-pointer flex-col items-center p-[5px] lg:order-none lg:ml-[40px]"
         >
-          <IconApp
-            name="app:user"
-            class-name="w-[24px] h-[20px] lg:w-[20px] lg:h-[20px] lg:mb-[5px]"
-          />
+          <IconApp name="app:user" class="h-[20px] w-[24px] lg:mb-[5px] lg:h-[20px] lg:w-[20px]" />
           <div
             class="hidden text-[12px] transition-colors duration-[var(--transition-duration)] group-hover:text-[var(--color-secondary)] lg:block"
           >
@@ -95,7 +92,7 @@
         >
           <IconApp
             name="app:basket"
-            class-name="w-[24px] h-[24px] lg:w-[20px] lg:h-[20px] lg:mb-[5px]"
+            class="h-[24px] w-[24px] lg:mb-[5px] lg:h-[20px] lg:w-[20px]"
           />
           <div
             class="hidden text-[12px] transition-colors duration-[var(--transition-duration)] group-hover:text-[var(--color-secondary)] lg:block"

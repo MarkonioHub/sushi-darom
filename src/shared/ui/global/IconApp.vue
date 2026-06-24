@@ -1,13 +1,12 @@
 <script setup lang="ts">
   interface Props {
     name: string;
-    className?: string;
   }
   defineProps<Props>();
 </script>
 
 <template>
-  <Icon :name="name" :class="className" />
+  <Icon :name="name" />
 </template>
 
 <style scoped></style>

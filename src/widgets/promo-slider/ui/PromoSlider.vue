@@ -84,7 +84,7 @@
           :disabled="disablePrev"
           @click="containerRef?.swiper?.slidePrev()"
         >
-          <IconApp name="app:chevron-left" class-name="w-[20px] h-[20px]" />
+          <IconApp name="app:chevron-left" class="h-[20px] w-[20px]" />
         </button>
         <button
           :class="[
@@ -111,7 +111,7 @@
           :disabled="disableNext"
           @click="containerRef?.swiper?.slideNext()"
         >
-          <IconApp name="app:chevron-left" class-name="w-[20px] h-[20px]" />
+          <IconApp name="app:chevron-left" class="h-[20px] w-[20px]" />
         </button>
         <ClientOnly>
           <swiper-container

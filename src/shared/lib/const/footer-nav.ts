@@ -12,7 +12,7 @@ export const FOOTER_NAV = [
     title: 'Клиентам',
     list: [
       { text: 'Доставка и самовывоз', to: '/delivery', type: 'link' },
-      { text: 'Оставить отзыв', to: '/', type: 'link' },
+      { text: 'Оставить отзыв', to: '/review', type: 'link' },
     ],
   },
   {

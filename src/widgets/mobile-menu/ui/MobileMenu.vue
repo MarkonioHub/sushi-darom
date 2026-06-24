@@ -8,6 +8,7 @@
   const overlayStore = useOverlayStore();
 
   function closeMenu() {
+    if (!mobileMenuStore.isMobileMenuOpen) return;
     mobileMenuStore.close();
     overlayStore.close();
   }
@@ -26,7 +27,7 @@
       class="fixed left-0 top-0 z-[1000] h-[100%] w-[80%] overflow-x-auto bg-[#ffffff] p-[20px] shadow-[2px_0_5px_rgba(0,0,0,0.5)]"
     >
       <button class="absolute right-[10px] top-[10px] rotate-45 p-[10px]" @click="closeMenu">
-        <IconApp name="app:plus" class-name="w-[20px] h-[20px]" />
+        <IconApp name="app:plus" class="h-[20px] w-[20px]" />
       </button>
       <LogoSite :class="['inline-block', 'mb-[30px]', 'ml-[-8px]']" />
       <nav>
@@ -59,21 +60,21 @@
         <div
           class="flex cursor-pointer items-center gap-[8px] py-[10px] text-[var(--color-secondary)]"
         >
-          <IconApp name="app:location" class-name="text-[12px]" />
+          <IconApp name="app:location" class="text-[12px]" />
           Краснодар
         </div>
         <NuxtLink
-          to="/"
+          to="/review"
           class="flex items-center gap-[8px] py-[10px] text-[var(--color-secondary)]"
         >
-          <IconApp name="app:chat" class-name="text-[12px]" />
+          <IconApp name="app:chat" class="text-[12px]" />
           Оставить отзыв
         </NuxtLink>
         <a
           :href="`tel:${CONTACTS.phone}`"
           class="flex items-center gap-[8px] py-[10px] text-[var(--color-secondary)]"
         >
-          <IconApp name="app:phone" class-name="text-[12px]" />
+          <IconApp name="app:phone" class="text-[12px]" />
           {{ CONTACTS.phone }}
         </a>
       </div>

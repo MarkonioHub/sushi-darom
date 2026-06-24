@@ -60,7 +60,7 @@
         <div>Телефон</div>
         <div :class="['flex', 'items-center', 'justify-between']">
           <a :href="`tel:${CONTACTS.phone}`" :class="['text-[20px]']">{{ CONTACTS.phone }}</a>
-          <IconApp name="app:phone" class-name="w-[20px] h-[20px]" />
+          <IconApp name="app:phone" class="h-[20px] w-[20px]" />
         </div>
       </div>
       <h2 :class="['lg:text-[32px]', 'font-[600]', 'mb-[16px]', 'text-[24px]', 'mb-[8px]']">
@@ -94,7 +94,7 @@
               'border-[#dfe0e5]',
             ]"
           >
-            <IconApp name="app:map-pin" class-name="w-[17px] h-[17px]" />
+            <IconApp name="app:map-pin" class="h-[17px] w-[17px]" />
           </div>
           <div>
             <div :class="['text-[16px]', 'mb-[4px]']">{{ item.title }}</div>

@@ -8,7 +8,8 @@ export const useModalStore = defineStore('modal', () => {
   const component = shallowRef(null);
   const size = ref<string>('');
 
-  function open(modalComponent: any, modalSize: string) {
+  async function open(modalComponent: any, modalSize: string) {
+    await nextTick();
     component.value = modalComponent;
     isOpen.value = true;
     size.value = modalSize;

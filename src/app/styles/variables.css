@@ -3,6 +3,11 @@
   --color-primary: #000000;
   --color-secondary: #727281;
   --color-orange: #f36e20;
+  --color-orange-hover: #f87a31;
+  --color-error: #f45151;
+  --color-acent: #288de5;
+  --border-color: #d9d9d9;
+  --border-color-active: #191c23;
   --tertiary-background: #dfe0e5;
   --primary-background: #f9f9f9;
   --secondary-background: #f4f5f6;

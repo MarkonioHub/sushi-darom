@@ -22,11 +22,11 @@
       <button
         :class="['flex', 'h-[40px]', 'w-[40px]', 'shrink-0', 'items-center', 'justify-center']"
       >
-        <IconApp name="app:minus" class-name="w-[14px] h-[2px]" />
+        <IconApp name="app:minus" class="h-[2px] w-[14px]" />
       </button>
       <div class="flex w-[14px] shrink-0 items-center justify-center text-[16px]">1</div>
       <button class="h-[40px] w-[40px] shrink-0 translate-y-[2px]">
-        <IconApp name="app:plus" class-name="w-[14px] h-[14px]" />
+        <IconApp name="app:plus" class="h-[14px] w-[14px]" />
       </button>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { useBreadcrumbs } from '../lib/hooks/useBreadcrumbs';
+  import { useBreadcrumbs } from '@/shared/lib';
 
   const { breadcrumbs } = useBreadcrumbs();
 </script>
