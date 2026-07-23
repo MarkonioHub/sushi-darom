@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { usePromoModal } from '@/entities/promo';
+  import { TitleSite } from '~/shared/ui';
 
   const { pushQuery } = usePromoModal();
 </script>
@@ -7,7 +8,7 @@
 <template>
   <div class="[mb-[80px]]">
     <ContainerSite>
-      <h1 :class="['lg:text-[40px]', 'font-[600]', 'mb-[30px]', 'text-[30px]']">Акции</h1>
+      <TitleSite class="mb-[30px]" :tag="'h1'">Акции</TitleSite>
       <div :class="['flex', 'flex-wrap', 'sm:gap-[20px]', 'gap-[10px]']">
         <div
           @click="pushQuery('1')"

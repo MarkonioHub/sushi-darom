@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { CONTACTS, SOCIAL_LIST, FOOTER_NAV, MOB_APP } from '@/shared/lib';
   import { useResize } from '@/shared/lib';
-  import { LogoSite } from '~/shared/ui';
+  import { LogoSite } from '@/shared/ui';
 
   const opened = ref<number[]>([]);
   const isDesktop = ref<boolean>();

@@ -11,13 +11,13 @@ export function usePromoModal() {
 
     (promo) => {
       if (promo) {
-        modalStore.open(PromoModal, 'promo');
+        modalStore.open(PromoModal, 'middle');
       }
     }
   );
 
   onMounted(() => {
-    if (route.query.promo) modalStore.open(PromoModal, 'promo');
+    if (route.query.promo) modalStore.open(PromoModal, 'middle');
   });
 
   function pushQuery(slug: string) {

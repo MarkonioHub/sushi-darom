@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ProductCard } from '@/entities/product';
+  import { TitleSite } from '~/shared/ui';
 
   const router = useRouter();
   const route = useRoute();
@@ -70,7 +71,9 @@
     :ref="(el) => setSectionRef(el, `slug-${section}`)"
   >
     <ContainerSite>
-      <h3 class="mb-[20px] text-[24px] font-[600] lg:text-[32px]">Категория {{ section }}</h3>
+      <TitleSite class="mb-[20px]" :variant="'secondary'" :tag="'h3'">
+        Категория {{ section }}
+      </TitleSite>
       <ul class="mb-[24px] flex flex-wrap gap-[12px]">
         <li
           v-for="(tab, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"

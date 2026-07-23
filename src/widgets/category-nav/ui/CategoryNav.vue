@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import { useDragScroll } from '@/shared/lib';
-  const { element, isDragging, pointerDown, pointerMove, pointerUp } = useDragScroll();
-  const route = useRoute();
+  import { TitleSite } from '@/shared/ui';
 
+  const tabsContainer = useTemplateRef<HTMLElement>('element');
+  const { isDragging, onMouseDown, onMouseMove, onMouseUpOrLeave } = useDragScroll(tabsContainer);
+  const route = useRoute();
   const tabs = new Map<string, HTMLElement>();
-  const tabsContainer = useTemplateRef('element');
 
   function scrollToCategory(slug: string) {
     const element = document.getElementById(slug);
@@ -40,7 +41,7 @@
 <template>
   <div class="mb-[10px] scroll-mt-[var(--header-height)] lg:mb-[16px]" id="menu">
     <ContainerSite>
-      <div class="text-[24px] font-[600] lg:text-[32px]">Меню</div>
+      <TitleSite :variant="'secondary'">Меню</TitleSite>
     </ContainerSite>
   </div>
   <div class="sticky top-[var(--header-height)] z-[10] bg-[#ffffff] p-[0_0_10px] lg:py-[10px]">
@@ -48,14 +49,18 @@
       <nav>
         <ul
           ref="element"
-          @pointerdown="pointerDown"
-          @pointermove="pointerMove"
-          @pointerup="pointerUp"
+          @mousedown="onMouseDown"
+          @mousemove="onMouseMove"
+          @mouseup="onMouseUpOrLeave"
+          @mouseleave="onMouseUpOrLeave"
+          @dragstart.prevent
+          style="touch-action: pan-x; scroll-behavior: smooth"
           :class="[
             'hide-scrollbar',
             '-mx-[16px]',
             'flex',
             'cursor-grab',
+            'active:cursor-grabbing',
             'select-none',
             'snap-x',
             'gap-[12px]',
@@ -66,11 +71,12 @@
           ]"
         >
           <li
-            v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
-            :key="index"
+            v-for="item in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
+            :key="item"
             @click="!isDragging && scrollToCategory(`slug-${item}`)"
             :ref="(el) => setCategoryTab(el, `slug-${item}`)"
             :class="[
+              'snap-start',
               'p-[8px_16px]',
               'rounded-[24px]',
               'text-[16px]',

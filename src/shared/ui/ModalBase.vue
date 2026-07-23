@@ -17,8 +17,8 @@
   });
 
   const modalWidths: Record<string, string> = {
-    promo: 'max-w-[744px]',
-    review: 'max-w-[584px]',
+    middle: 'max-w-[744px]',
+    small: 'max-w-[620px]',
   };
 
   const className = computed(() => [

@@ -2,7 +2,9 @@
   import { HEADER_NAV } from '@/shared/lib';
   import { LogoSite } from '@/shared/ui';
   import { useAnchorScroll } from '@/shared/lib';
-  import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
+  import { useMobileMenuStore, useModalStore, useOverlayStore } from '@/shared/model';
+  const modalStore = useModalStore();
+  import { LoginModal } from '@/features/login';
 
   const { navigateToAnchorScroll } = useAnchorScroll();
   const mobileMenuStore = useMobileMenuStore();
@@ -40,14 +42,24 @@
               <button
                 v-if="item.type === 'button'"
                 @click="navigateToAnchorScroll(item.to, item.hash)"
-                class="p-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
+                :class="[
+                  'p-[10px]',
+                  'transition-colors',
+                  'duration-[var(--transition-duration)]',
+                  'hover:text-[var(--color-secondary)]',
+                ]"
               >
                 {{ item.text }}
               </button>
               <NuxtLink
                 v-else-if="item.type === 'link'"
                 :to="item.to"
-                class="p-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
+                :class="[
+                  'p-[10px]',
+                  'transition-colors',
+                  'duration-[var(--transition-duration)]',
+                  'hover:text-[var(--color-secondary)]',
+                ]"
               >
                 {{ item.text }}
               </NuxtLink>
@@ -56,7 +68,12 @@
                 :href="item.href"
                 target="_blank"
                 rel="noreferrer"
-                class="p-[10px] transition-colors duration-[var(--transition-duration)] hover:text-[var(--color-secondary)]"
+                :class="[
+                  'p-[10px]',
+                  'transition-colors',
+                  'duration-[var(--transition-duration)]',
+                  'hover:text-[var(--color-secondary)]',
+                ]"
               >
                 {{ item.text }}
               </a>
@@ -64,38 +81,89 @@
           </ul>
         </nav>
         <div
-          class="group order-1 flex cursor-pointer flex-col items-center p-[5px] lg:order-none lg:ml-auto"
+          :class="[
+            'group',
+            'order-1',
+            'flex',
+            'cursor-pointer',
+            'flex-col',
+            'items-center',
+            'p-[5px]',
+            'lg:order-none',
+            'lg:ml-auto',
+          ]"
         >
           <IconApp
             name="app:search"
-            class="h-[18px] w-[18px] lg:mb-[7px] lg:h-[16px] lg:w-[16px]"
+            :class="['h-[18px]', 'w-[18px]', 'lg:mb-[7px]', 'lg:h-[16px]', 'lg:w-[16px]']"
           />
           <div
-            class="hidden text-[12px] transition-colors duration-[var(--transition-duration)] group-hover:text-[var(--color-secondary)] lg:block"
+            :class="[
+              'hidden',
+              'text-[12px]',
+              'transition-colors',
+              'duration-[var(--transition-duration)]',
+              'group-hover:text-[var(--color-secondary)]',
+              'lg:block',
+            ]"
           >
             Поиск
           </div>
         </div>
         <div
-          class="group order-3 flex cursor-pointer flex-col items-center p-[5px] lg:order-none lg:ml-[40px]"
+          @click="modalStore.open(LoginModal, 'small')"
+          :class="[
+            'group',
+            'order-3',
+            'flex',
+            'cursor-pointer',
+            'flex-col',
+            'items-center',
+            'p-[5px]',
+            'lg:order-none',
+            'lg:ml-[40px]',
+          ]"
         >
           <IconApp name="app:user" class="h-[20px] w-[24px] lg:mb-[5px] lg:h-[20px] lg:w-[20px]" />
           <div
-            class="hidden text-[12px] transition-colors duration-[var(--transition-duration)] group-hover:text-[var(--color-secondary)] lg:block"
+            :class="[
+              'hidden',
+              'text-[12px]',
+              'transition-colors',
+              'duration-[var(--transition-duration)]',
+              'group-hover:text-[var(--color-secondary)]',
+              'lg:block',
+            ]"
           >
             Профиль
           </div>
         </div>
         <NuxtLink
           to="/basket"
-          class="group order-4 flex flex-col items-center p-[5px] lg:order-none lg:ml-[40px]"
+          :class="[
+            'group',
+            'order-4',
+            'flex',
+            'flex-col',
+            'items-center',
+            'p-[5px]',
+            'lg:order-none',
+            'lg:ml-[40px]',
+          ]"
         >
           <IconApp
             name="app:basket"
-            class="h-[24px] w-[24px] lg:mb-[5px] lg:h-[20px] lg:w-[20px]"
+            :class="['h-[24px]', 'w-[24px]', 'lg:mb-[5px]', 'lg:h-[20px]', 'lg:w-[20px]']"
           />
           <div
-            class="hidden text-[12px] transition-colors duration-[var(--transition-duration)] group-hover:text-[var(--color-secondary)] lg:block"
+            :class="[
+              'hidden',
+              'text-[12px]',
+              'transition-colors',
+              'duration-[var(--transition-duration)]',
+              'group-hover:text-[var(--color-secondary)]',
+              'lg:block',
+            ]"
           >
             Корзина
           </div>

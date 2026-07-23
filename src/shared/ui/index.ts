@@ -8,3 +8,4 @@ export { default as InputSite } from './InputSite.vue';
 export { default as TextareaSite } from './TextareaSite.vue';
 export { default as ButtonSite } from './ButtonSite.vue';
 export { default as SelectSite } from './SelectSite.vue';
+export { default as TitleSite } from './TitleSite.vue';

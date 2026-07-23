@@ -75,8 +75,8 @@
     validateOnModelUpdate: false,
     validateOnBlur: false,
   });
-  const [city, cityProps] = defineField('city');
-  const [theme, themeProps] = defineField('theme');
+  const [city] = defineField('city');
+  const [theme] = defineField('theme');
   const [message, messageProps] = defineField('message', {
     validateOnModelUpdate: false,
     validateOnBlur: false,
@@ -119,7 +119,7 @@
 
   const onSubmit = handleSubmit(async (values) => {
     console.log('Отправка данных: ', values);
-    modalStore.open(ModalThanks, 'review');
+    modalStore.open(ModalThanks, 'small');
     handleReset();
   });
 

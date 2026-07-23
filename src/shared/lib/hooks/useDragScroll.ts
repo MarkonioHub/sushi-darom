@@ -1,44 +1,57 @@
-export function useDragScroll() {
-  const element = ref<HTMLElement | null>(null);
+import { type Ref } from 'vue';
 
-  let pressed = false;
+export function useDragScroll(element: Ref<HTMLElement | null>) {
+  const isDragging = ref(false);
+
+  let isDown = false;
   let startX = 0;
   let scrollLeft = 0;
 
-  const isDragging = ref(false);
+  function onMouseDown(e: MouseEvent) {
+    if (!element.value) return;
 
-  function pointerDown(event: PointerEvent) {
-    pressed = true;
-    startX = event.clientX;
-    scrollLeft = element.value?.scrollLeft ?? 0;
+    isDown = true;
     isDragging.value = false;
+
+    element.value.style.scrollSnapType = 'none';
+    element.value.style.scrollBehavior = 'auto';
+
+    startX = e.pageX - element.value.offsetLeft;
+    scrollLeft = element.value.scrollLeft;
   }
 
-  function pointerMove(event: PointerEvent) {
-    if (!pressed || !element.value) return;
+  function onMouseMove(e: MouseEvent) {
+    if (!isDown || !element.value) return;
 
-    const walk = event.clientX - startX;
+    e.preventDefault();
 
-    if (Math.abs(walk) > 10) {
+    const x = e.pageX - element.value.offsetLeft;
+    const walk = (x - startX) * 1.5;
+
+    if (Math.abs(walk) > 5) {
       isDragging.value = true;
     }
 
     element.value.scrollLeft = scrollLeft - walk;
   }
 
-  function pointerUp() {
-    pressed = false;
+  function onMouseUpOrLeave() {
+    if (!isDown || !element.value) return;
 
-    requestAnimationFrame(() => {
+    isDown = false;
+
+    element.value.style.scrollSnapType = 'x mandatory';
+    element.value.style.scrollBehavior = '';
+
+    setTimeout(() => {
       isDragging.value = false;
-    });
+    }, 50);
   }
 
   return {
-    element,
     isDragging,
-    pointerDown,
-    pointerMove,
-    pointerUp,
+    onMouseDown,
+    onMouseMove,
+    onMouseUpOrLeave,
   };
 }
