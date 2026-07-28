@@ -1,0 +1,9 @@
+model ProductTag {
+  id String @id @default(cuid())
+  productId String
+  product Product @relation(fields: [productId], references: [id])
+  name String
+  slug String @unique
+  icon String?
+  @@map("product_tags")
+}

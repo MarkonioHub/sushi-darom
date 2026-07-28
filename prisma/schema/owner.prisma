@@ -1,0 +1,8 @@
+model Owner {
+  id String @id @default(cuid())
+  name String
+  inn String
+  ogrn String
+  restaurants Restaurant[]
+  @@map("owners")
+}

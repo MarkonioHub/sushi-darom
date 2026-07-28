@@ -1,0 +1,18 @@
+model Restaurant {
+  id String @id @default(cuid())
+  cityId String
+  city City @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  name String
+  slug String
+  address String
+  ownerId String
+  owner Owner @relation(fields: [ownerId], references: [id])
+  latitude Decimal @db.Decimal(9, 6)
+  longitude Decimal @db.Decimal(9, 6)
+  isActive Boolean @default(true)
+  zones DeliveryZone[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([cityId, slug])
+  @@map("restaurants")
+}

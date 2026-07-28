@@ -47,6 +47,7 @@
           'bg-[#ffffff]',
           'lg:rounded-[16px]',
           'relative',
+          'w-[100%]',
           'max-h-[80vh]',
           'overflow-y-auto',
           'pointer-events-auto',

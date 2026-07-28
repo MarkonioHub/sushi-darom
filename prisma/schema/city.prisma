@@ -1,0 +1,10 @@
+model City {
+  id String @id @default(cuid())
+  name String
+  slug String @unique
+  phone String
+  restaurants Restaurant[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("cities")
+}

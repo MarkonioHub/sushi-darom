@@ -1,0 +1,20 @@
+model Product {
+  id String @id @default(cuid())
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
+  name String
+  image String?
+  description String?
+  allergens String?
+  compound String?
+  price String
+  oldPrice String?
+  weight Int?
+  pieces Int?
+  tags ProductTag[]
+  proteins Decimal? @db.Decimal(5,2)
+  carbs Decimal? @db.Decimal(5,2)
+  fats Decimal? @db.Decimal(5,2)
+  calories Int?
+  @@map("products")
+}
