@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import { CONTACTS, HEADER_NAV } from '@/shared/lib';
-  import { useMobileMenuStore, useOverlayStore } from '@/shared/model';
+  import { useMobileMenuStore } from '@/shared/model';
   import { useResize } from '@/shared/lib';
-  import { LogoSite } from '@/shared/ui';
+  import { LogoSite } from '@/shared/ui/logo-site';
+  import { useOverlayStore } from '@/shared/ui/overlay-site';
 
   const mobileMenuStore = useMobileMenuStore();
   const overlayStore = useOverlayStore();
@@ -26,7 +27,7 @@
       v-show="mobileMenuStore.isMobileMenuOpen"
       class="fixed left-0 top-0 z-[1000] h-[100%] w-[80%] overflow-x-auto bg-[#ffffff] p-[20px] shadow-[2px_0_5px_rgba(0,0,0,0.5)]"
     >
-      <button class="absolute right-[10px] top-[10px] rotate-45 p-[10px]" @click="closeMenu">
+      <button class="absolute right-[12px] top-[10px] rotate-45 p-[10px]" @click="closeMenu">
         <IconApp name="app:plus" class="h-[20px] w-[20px]" />
       </button>
       <LogoSite :class="['inline-block', 'mb-[30px]', 'ml-[-8px]']" />

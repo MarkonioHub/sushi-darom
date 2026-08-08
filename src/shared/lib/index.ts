@@ -8,6 +8,5 @@ export { useResize } from './hooks/useResize';
 export { useDragScroll } from './hooks/useDragScroll';
 export { useAnchorScroll } from './hooks/useAnchorScroll';
 export { useClickOutside } from './hooks/useClickOutside';
-export { useBreadcrumbs } from './hooks/useBreadcrumbs';
 
 export { debounce } from './utils/debounce';

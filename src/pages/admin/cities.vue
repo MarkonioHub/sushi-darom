@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { AdminContent } from '@/widgets/admin-content';
+  import { AdminCity } from '@/widgets/admin-city';
 
   definePageMeta({
     layout: 'admin',
@@ -10,7 +10,7 @@
 </script>
 
 <template>
-  <AdminContent />
+  <AdminCity />
 </template>
 
 <style scoped></style>

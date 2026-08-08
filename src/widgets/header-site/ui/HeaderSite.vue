@@ -1,8 +1,10 @@
 <script setup lang="ts">
   import { HEADER_NAV } from '@/shared/lib';
-  import { LogoSite } from '@/shared/ui';
+  import { LogoSite } from '@/shared/ui/logo-site';
   import { useAnchorScroll } from '@/shared/lib';
-  import { useMobileMenuStore, useModalStore, useOverlayStore } from '@/shared/model';
+  import { useMobileMenuStore } from '@/shared/model';
+  import { useModalStore } from '@/shared/ui/modal-base';
+  import { useOverlayStore } from '@/shared/ui/overlay-site';
   const modalStore = useModalStore();
   import { LoginModal } from '@/features/login';
 

@@ -1,4 +1,4 @@
-import type { BreadCrumbItem } from '@/shared/model';
+import type { BreadCrumbItem } from '@/shared/ui/bread-crumbs';
 
 export const useBreadcrumbs = () => {
   const route = useRoute();

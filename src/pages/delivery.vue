@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { BreadCrumbs } from '@/shared/ui';
+  import { BreadCrumbs } from '@/shared/ui/bread-crumbs';
   import { DeliveryInfo } from '@/widgets/delivery-info';
 
   useSeoMeta({

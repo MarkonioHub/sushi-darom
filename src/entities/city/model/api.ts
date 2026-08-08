@@ -1,13 +1,4 @@
-import type { City, CreateCity } from './types';
-import { api } from '@/shared/api';
+import type { City, CreateCity, UpdateCity } from './types';
+import { createCrudApi } from '@/shared/api';
 
-export function getCities() {
-  return api<City[]>('/api/admin/cities');
-}
-
-export function createCity(data: CreateCity) {
-  return api<CreateCity>('/api/admin/cities', {
-    method: 'POST',
-    body: data,
-  });
-}
+export const cityApi = createCrudApi<City, CreateCity, UpdateCity>('/api/admin/cities');

@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { PromoTile } from '@/widgets/promo-tile';
-  import { BreadCrumbs } from '@/shared/ui';
+  import { BreadCrumbs } from '@/shared/ui/bread-crumbs';
 
   useSeoMeta({
     title: 'Акции Суши Даром в Краснодаре',

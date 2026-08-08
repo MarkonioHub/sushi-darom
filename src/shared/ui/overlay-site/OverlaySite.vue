@@ -1,5 +1,7 @@
 <script setup lang="ts">
-  import { useMobileMenuStore, useModalStore, useOverlayStore } from '@/shared/model';
+  import { useMobileMenuStore } from '@/shared/model';
+  import { useModalStore } from '../modal-base';
+  import { useOverlayStore } from '../overlay-site';
   const overlayStore = useOverlayStore();
   const mobileMenuStore = useMobileMenuStore();
   const modalStore = useModalStore();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { InputSite, TitleSite } from '@/shared/ui';
+  import { InputSite } from '@/shared/ui/input-site';
 
   const city = ref<string>('');
 </script>

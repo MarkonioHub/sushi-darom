@@ -2,12 +2,12 @@
   import { z } from 'zod';
   import { toTypedSchema } from '@vee-validate/zod';
   import { vMaska } from 'maska/vue';
-  import { ButtonSite, InputSite } from '@/shared/ui';
-  import { TextareaSite } from '@/shared/ui';
-  import { SelectSite } from '@/shared/ui';
+  import { InputSite } from '@/shared/ui/input-site';
+  import { TextareaSite } from '@/shared/ui/textarea-site';
+  import { SelectSite } from '@/shared/ui/select-site';
   import { ModalThanks } from '@/entities/review';
-  import { useModalStore } from '@/shared/model';
-  import type { SelectOption } from '@/shared/model';
+  import { useModalStore } from '@/shared/ui/modal-base';
+  import type { SelectOption } from '@/shared/ui/select-site';
 
   const modalStore = useModalStore();
   const fileTypes = [

@@ -1,4 +1,4 @@
-import { useModalStore } from '@/shared/model';
+import { useModalStore } from '@/shared/ui/modal-base';
 import { default as PromoModal } from '../ui/PromoModal.vue';
 
 export function usePromoModal() {
@@ -11,13 +11,13 @@ export function usePromoModal() {
 
     (promo) => {
       if (promo) {
-        modalStore.open(PromoModal, 'middle');
+        modalStore.open(PromoModal, 'middle', {});
       }
     }
   );
 
   onMounted(() => {
-    if (route.query.promo) modalStore.open(PromoModal, 'middle');
+    if (route.query.promo) modalStore.open(PromoModal, 'middle', {});
   });
 
   function pushQuery(slug: string) {

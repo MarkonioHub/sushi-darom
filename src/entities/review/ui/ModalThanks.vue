@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { ButtonSite } from '@/shared/ui';
-
   const share = [
     { text: 'Яндекс Карты', style: ['text-[#fc3f1d]'] },
     { text: 'Google Maps', style: ['text-[#1A73E8]'] },

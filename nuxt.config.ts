@@ -14,14 +14,6 @@ export default defineNuxtConfig({
       global: true,
     },
   ],
-  alias: {
-    '@app': '/src/app',
-    '@shared': '/src/shared',
-    '@entities': '/src/entities',
-    '@features': '/src/features',
-    '@widgets': '/src/widgets',
-    '@pages': '/src/pages',
-  },
   css: ['@/app/styles/globals.css'],
   modules: [
     '@nuxtjs/tailwindcss',

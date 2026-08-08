@@ -4,7 +4,8 @@
   import { FooterSite } from '@/widgets/footer-site';
   import { FooterAside } from '@/widgets/footer-aside';
   import { MobileMenu } from '@/widgets/mobile-menu';
-  import { OverlaySite, ModalBase } from '@/shared/ui';
+  import { ModalBase } from '@/shared/ui/modal-base';
+  import { OverlaySite } from '@/shared/ui/overlay-site';
 </script>
 
 <template>

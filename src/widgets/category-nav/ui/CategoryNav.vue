@@ -1,6 +1,9 @@
 <script setup lang="ts">
   import { useDragScroll } from '@/shared/lib';
-  import { TitleSite } from '@/shared/ui';
+  import { useCategoryStore } from '@/entities/category';
+
+  const categoriesStore = useCategoryStore();
+  const { categories } = storeToRefs(categoriesStore);
 
   const tabsContainer = useTemplateRef<HTMLElement>('element');
   const { isDragging, onMouseDown, onMouseMove, onMouseUpOrLeave } = useDragScroll(tabsContainer);
@@ -71,10 +74,10 @@
           ]"
         >
           <li
-            v-for="item in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
-            :key="item"
-            @click="!isDragging && scrollToCategory(`slug-${item}`)"
-            :ref="(el) => setCategoryTab(el, `slug-${item}`)"
+            v-for="category in categories"
+            :key="category.id"
+            @click="!isDragging && scrollToCategory(category.slug)"
+            :ref="(el) => setCategoryTab(el, category.slug)"
             :class="[
               'snap-start',
               'p-[8px_16px]',
@@ -84,12 +87,12 @@
               'duration-[var(--transition-duration)]',
               'cursor-pointer',
               'shrink-0',
-              activeSlug === `slug-${item}`
+              activeSlug === category.slug
                 ? 'bg-[var(--color-primary)] text-white'
                 : 'bg-[var(--secondary-background)] hover:bg-[var(--tertiary-background)]',
             ]"
           >
-            Категория {{ item }}
+            {{ category.name }}
           </li>
         </ul>
       </nav>

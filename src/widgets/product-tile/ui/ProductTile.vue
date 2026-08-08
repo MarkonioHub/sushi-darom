@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { ProductCard } from '@/entities/product';
-  import { TitleSite } from '~/shared/ui';
+  import { ProductItem } from '@/entities/product';
 
   const router = useRouter();
   const route = useRoute();
@@ -98,7 +97,7 @@
         </li>
       </ul>
       <div :class="['flex', 'flex-wrap', 'gap-[40px_20px]']">
-        <ProductCard
+        <ProductItem
           v-for="(product, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
           :key="index"
           :class="[

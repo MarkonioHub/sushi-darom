@@ -13,10 +13,10 @@ export const HEADER_NAV: HeaderNavItem[] = [
 export const HEADER_ADMIN_NAV: HeaderNavItem[] = [
   { type: 'link', text: 'Перейти на сайт', to: '/' },
   { type: 'link', text: 'Города', to: '/admin/cities' },
-  { type: 'link', text: 'Рестораны', to: '/admin/restourants' },
-  { type: 'link', text: 'Предприниматели', to: '/admin/restourants' },
-  { type: 'link', text: 'Зоны Доставки', to: '/admin/restourants' },
-  { type: 'link', text: 'Категории', to: '/admin/restourants' },
-  { type: 'link', text: 'Продукты', to: '/admin/restourants' },
-  { type: 'link', text: 'Теги продуктов', to: '/admin/restourants' },
+  { type: 'link', text: 'Рестораны', to: '/admin/restaurants' },
+  { type: 'link', text: 'Предприниматели', to: '/admin/owners' },
+  { type: 'link', text: 'Зоны Доставки', to: '/admin/delivery-zones' },
+  { type: 'link', text: 'Категории', to: '/admin/categories' },
+  { type: 'link', text: 'Продукты', to: '/admin/products' },
+  { type: 'link', text: 'Теги продуктов', to: '/admin/product-tags' },
 ];

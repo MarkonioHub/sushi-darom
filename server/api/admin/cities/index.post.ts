@@ -27,9 +27,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const city = await prisma.city.create({
+  return prisma.city.create({
     data,
   });
-
-  return city;
 });

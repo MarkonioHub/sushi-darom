@@ -1,8 +1,6 @@
 <script setup lang="ts">
-  import { TitleSite } from '@/shared/ui';
   import { z } from 'zod';
-  import { InputSite } from '@/shared/ui';
-  import { ButtonSite } from '@/shared/ui';
+  import { InputSite } from '@/shared/ui/input-site';
   import { vMaska } from 'maska/vue';
 
   const validationSchema = toTypedSchema(

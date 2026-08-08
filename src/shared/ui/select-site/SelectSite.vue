@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { useClickOutside } from '@/shared/lib';
-  import type { SelectOption } from '@/shared/model';
+  import type { SelectOption } from '@/shared/ui/select-site';
 
   interface Props {
     options: SelectOption[];

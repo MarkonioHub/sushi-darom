@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { CONTACTS } from '@/shared/lib';
-  import { MapDelivery } from '@/shared/ui';
+  import { MapDelivery } from '@/shared/ui/map-delivery';
 
   const pickupList = [
     {

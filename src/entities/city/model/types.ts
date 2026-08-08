@@ -10,3 +10,9 @@ export interface CreateCity {
   slug: string;
   phone: string;
 }
+
+export interface UpdateCity {
+  name: string;
+  slug: string;
+  phone: string;
+}

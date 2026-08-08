@@ -1,17 +1,42 @@
 <script setup lang="ts">
-  import { ButtonSite, InputSite } from '@/shared/ui';
+  import { InputSite } from '@/shared/ui/input-site';
   import { vMaska } from 'maska/vue';
-  import { useModalStore } from '@/shared/model';
-  import { createCity, useCityStore } from '@/entities/city';
-  import { createCitySchema } from '@/entities/city';
+  import { useModalStore } from '@/shared/ui/modal-base';
+  import { cityApi, useCityStore, createCitySchema, citySchema } from '@/entities/city';
+  import type { City } from '@/entities/city';
+
+  interface Props {
+    id?: string;
+    title?: string;
+    buttonText?: string;
+    city?: City;
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    title: 'Заголовок формы',
+    buttonText: 'Текст кнопки',
+  });
+
+  const initialValues = props.city?.id
+    ? {
+        id: props.city?.id || undefined,
+        name: props.city?.name || '',
+        slug: props.city?.slug || '',
+        phone: props.city?.phone || '',
+      }
+    : {
+        name: props.city?.name || '',
+        slug: props.city?.slug || '',
+        phone: props.city?.phone || '',
+      };
+
+  const validationSchema = props.city?.id
+    ? toTypedSchema(citySchema)
+    : toTypedSchema(createCitySchema);
 
   const { handleSubmit, errors, defineField, handleReset, isSubmitting, setFieldError } = useForm({
-    validationSchema: toTypedSchema(createCitySchema),
-    initialValues: {
-      name: '',
-      slug: '',
-      phone: '',
-    },
+    validationSchema: validationSchema,
+    initialValues: initialValues,
   });
 
   const modalStore = useModalStore();
@@ -40,19 +65,24 @@
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await createCity(values);
+      const id = props.city?.id;
+      if (id) {
+        await cityApi.update(id, values);
+      } else {
+        await cityApi.create(values);
+      }
+      modalStore.close();
+      handleReset();
+      await cityStore.fetchCities();
     } catch (e) {
       serverError.value = (e as Error).message;
     }
-    await createCity(values);
-    await cityStore.fetchCities();
-    modalStore.close();
-    handleReset();
   });
 </script>
 
 <template>
   <form @submit="onSubmit" :class="['flex', 'flex-col', 'gap-[24px]', 'p-[60px_40px]']">
+    <TitleSite :variant="'secondary'">{{ props.title }}</TitleSite>
     <div :class="['w-[100%]']">
       <InputSite
         @input="clearError('name')"
@@ -113,7 +143,7 @@
         :disabled="isSubmitting"
         :buttonType="'submit'"
       >
-        Создать
+        {{ props.buttonText }}
       </ButtonSite>
     </div>
     <div v-if="serverError">

@@ -1,4 +1,4 @@
-import { useOverlayStore } from './overlayStore';
+import { useOverlayStore } from '../overlay-site';
 
 export const useModalStore = defineStore('modal', () => {
   const route = useRoute();
@@ -7,19 +7,22 @@ export const useModalStore = defineStore('modal', () => {
   const isOpen = ref(false);
   const component = shallowRef(null);
   const size = ref<string>('');
+  const componentProps = ref({});
 
-  async function open(modalComponent: any, modalSize: string) {
+  async function open(modalComponent: any, modalSize: string, props: {}) {
     await nextTick();
     component.value = modalComponent;
     isOpen.value = true;
     size.value = modalSize;
     overlayStore.open();
+    componentProps.value = props;
   }
 
   function close() {
     component.value = null;
     isOpen.value = false;
     size.value = '';
+    componentProps.value = {};
     overlayStore.close();
     const query = { ...route.query };
     delete query.promo;
@@ -32,5 +35,6 @@ export const useModalStore = defineStore('modal', () => {
     isOpen,
     component,
     size,
+    componentProps,
   };
 });
