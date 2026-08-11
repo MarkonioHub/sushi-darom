@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { usePromoModal } from '@/entities/promo';
-  import { TitleSite } from '~/shared/ui';
 
   const { pushQuery } = usePromoModal();
 </script>

@@ -71,11 +71,7 @@
         >
           <IconApp name="app:plus" class="h-[18px] w-[18px] rotate-45" />
         </button>
-        <component
-          :is="modalStore.component"
-          v-bind="modalStore.componentProps"
-          :class="['max-h-[80vh]']"
-        />
+        <component :is="modalStore.component" v-bind="modalStore.componentProps" />
       </div>
     </div>
   </Transition>

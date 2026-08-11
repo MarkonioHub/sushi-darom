@@ -1,9 +1,15 @@
 <script setup lang="ts">
-  import { ProductItem } from '@/entities/product';
+  import { ProductItem } from '@/entities/product/ui';
+  import { useCategoryStore } from '@/entities/category';
+  import { useProductStore } from '@/entities/product';
 
   const router = useRouter();
   const route = useRoute();
   const sections = new Map<string, HTMLElement>();
+  const categoryStory = useCategoryStore();
+  const { categories } = storeToRefs(categoryStory);
+  const productStory = useProductStore();
+  const { products } = storeToRefs(productStory);
 
   function setSectionRef(el: Element | ComponentPublicInstance | null, slug: string) {
     if (!el) return;
@@ -59,46 +65,51 @@
       window.removeEventListener('scroll', checkScrollY);
     });
   });
+
+  function getProductsByCategoryId(categoryId: string) {
+    return products.value.filter((product) => product.categoryId === categoryId);
+  }
 </script>
 
 <template>
   <section
     class="mb-[80px] mt-[40px] scroll-mt-[calc(var(--header-height)+var(--header-category-nav))]"
-    v-for="(section, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]"
-    :key="index"
-    :id="`slug-${section}`"
-    :ref="(el) => setSectionRef(el, `slug-${section}`)"
+    v-for="category in categories"
+    :key="category.id"
+    :id="category.slug"
+    :ref="(el) => setSectionRef(el, category.slug)"
   >
     <ContainerSite>
       <TitleSite class="mb-[20px]" :variant="'secondary'" :tag="'h3'">
-        Категория {{ section }}
+        {{ category.name }}
       </TitleSite>
-      <ul class="mb-[24px] flex flex-wrap gap-[12px]">
-        <li
-          v-for="(tab, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
-          :key="index"
-          :class="[
-            'border',
-            'border-solid',
-            'border-[#191c23]',
-            'rounded-[999px]',
-            'p-[4px_8px]',
-            'flex',
-            'items-center',
-            'gap-[4px]',
-            'flex-wrap',
-            'cursor-pointer',
-            'hover:bg-[var(--tertiary-background)]',
-            'transition-colors',
-          ]"
-        >
-          <NuxtImg src="/public/examples/tag.png" class="h-[19px]" />
-          Таб {{ tab }}
-        </li>
-      </ul>
+      <!--      <ul class="mb-[24px] flex flex-wrap gap-[12px]">-->
+      <!--        <li-->
+      <!--          v-for="(tab, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"-->
+      <!--          :key="index"-->
+      <!--          :class="[-->
+      <!--            'border',-->
+      <!--            'border-solid',-->
+      <!--            'border-[#191c23]',-->
+      <!--            'rounded-[999px]',-->
+      <!--            'p-[4px_8px]',-->
+      <!--            'flex',-->
+      <!--            'items-center',-->
+      <!--            'gap-[4px]',-->
+      <!--            'flex-wrap',-->
+      <!--            'cursor-pointer',-->
+      <!--            'hover:bg-[var(&#45;&#45;tertiary-background)]',-->
+      <!--            'transition-colors',-->
+      <!--          ]"-->
+      <!--        >-->
+      <!--          <NuxtImg src="/public/examples/tag.png" class="h-[19px]" />-->
+      <!--          Таб {{ tab }}-->
+      <!--        </li>-->
+      <!--      </ul>-->
       <div :class="['flex', 'flex-wrap', 'gap-[40px_20px]']">
         <ProductItem
-          v-for="(product, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+          v-for="(product, index) in getProductsByCategoryId(category.id)"
+          :product="product"
           :key="index"
           :class="[
             'xl:w-[calc(25%-15px)]',

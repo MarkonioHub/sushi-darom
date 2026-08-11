@@ -19,7 +19,6 @@
     },
   });
 
-  const modalStore = useModalStore();
   const serverError = ref<string>();
   const isSubmitting = ref(false);
 
@@ -27,8 +26,6 @@
     isSubmitting.value = true;
     try {
       await props.handler();
-      modalStore.close();
-      if (props.callback) props.callback();
     } catch (e) {
       serverError.value = (e as Error).message;
     }

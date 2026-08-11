@@ -1,25 +1,48 @@
 <script setup lang="ts">
   import { CounterProduct } from '@/shared/ui/counter-product';
+  import type { Product } from '@/entities/product';
+  import { formatPriceWithCurrency } from '@/shared/lib';
+
+  interface Props {
+    product: Product;
+  }
+
+  const props = defineProps<Props>();
+
+  const to = computed(() => {
+    return `products/${props.product.slug}`;
+  });
+
+  const imageSrc = computed(() => {
+    return props.product.image ? props.product.image : '/products/placeholder.jpg';
+  });
 </script>
 
 <template>
   <div :class="['flex', 'flex-col', 'group']">
     <NuxtLink
-      to="#"
+      :to="to"
       :class="['relative', 'overflow-hidden', 'aspect-square', 'mb-[24px]', 'rounded-[16px]']"
     >
       <NuxtImg
-        src="/examples/set.png"
-        :class="['group-hover:scale-[1.06]', 'transition-transform', 'duration-[0.4s]']"
+        :src="imageSrc"
+        :class="[
+          'group-hover:scale-[1.06]',
+          'transition-transform',
+          'duration-[0.4s]',
+          'h-[100%]',
+          'w-[100%]',
+          'object-cover',
+        ]"
       />
-      <div :class="['absolute', 'left-[16px]', 'top-[16px]', 'flex', 'flex-wrap', 'gap-[5px]']">
-        <div
-          :class="['p-[4px_8px]', 'rounded-[20px]', 'text-[12px]', 'leading-[100%]', 'font-[600]']"
-          style="background: rgb(255, 25, 25); color: rgb(255, 255, 255)"
-        >
-          -50%
-        </div>
-      </div>
+      <!--      <div :class="['absolute', 'left-[16px]', 'top-[16px]', 'flex', 'flex-wrap', 'gap-[5px]']">-->
+      <!--        <div-->
+      <!--          :class="['p-[4px_8px]', 'rounded-[20px]', 'text-[12px]', 'leading-[100%]', 'font-[600]']"-->
+      <!--          style="background: rgb(255, 25, 25); color: rgb(255, 255, 255)"-->
+      <!--        >-->
+      <!--          -50%-->
+      <!--        </div>-->
+      <!--      </div>-->
     </NuxtLink>
     <div
       :class="[
@@ -33,16 +56,20 @@
         'will-change-transform',
       ]"
     >
-      <NuxtLink to="#" :class="['text-[24px]', 'font-[600]', 'mb-[8px]']">Сет Сетотерапия</NuxtLink>
+      <NuxtLink to="#" :class="['text-[24px]', 'font-[600]', 'mb-[8px]']">
+        {{ props.product.name }}
+      </NuxtLink>
       <div :class="['text-[var(--color-secondary)]', 'text-[16px]', 'leading-[20px]', 'mb-[20px]']">
-        Роллы: Тоямо, Красный краб. Запечённые: Ламанш, Сырный дуэт. Жареные: Далматин, ЧикенГо,
-        Макки-Такки
+        {{ props.product.description }}
       </div>
       <div class="mt-auto flex items-center justify-between">
         <div>
           <div class="flex items-center">
-            <div :class="['text-[24px]', 'font-[600]', 'leading-[30px]']">1 299 ₽</div>
+            <div :class="['text-[24px]', 'font-[600]', 'leading-[30px]']">
+              {{ formatPriceWithCurrency(props.product.price) }}
+            </div>
             <div
+              v-if="props.product.oldPrice"
               :class="[
                 'ml-[10px]',
                 'opacity-[0.5]',
@@ -58,7 +85,10 @@
               2 598 ₽
             </div>
           </div>
-          <div class="text-[var(--color-secondary)]">56 шт/ 1740 гр</div>
+          <div class="text-[var(--color-secondary)]">
+            <span v-if="props.product.pieces">56 шт /</span>
+            <span v-if="props.product.weight">1740 гр</span>
+          </div>
         </div>
         <CounterProduct />
       </div>

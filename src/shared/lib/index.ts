@@ -10,3 +10,5 @@ export { useAnchorScroll } from './hooks/useAnchorScroll';
 export { useClickOutside } from './hooks/useClickOutside';
 
 export { debounce } from './utils/debounce';
+export { createFormData } from './utils/create-form-data';
+export { formatPrice, formatPriceWithCurrency } from './utils/format-price';

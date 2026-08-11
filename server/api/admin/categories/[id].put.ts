@@ -15,30 +15,35 @@ export default defineEventHandler(async (event) => {
 
   const data = result.data;
 
-  const exists = await prisma.category.findUnique({
+  const duplicateSlug = await prisma.category.findFirst({
     where: {
       slug: data.slug,
+      NOT: {
+        id,
+      },
     },
   });
 
-  if (exists) {
+  if (duplicateSlug) {
     throw createError({
       status: 409,
       message: 'Категория с таким slug уже существует',
     });
   }
 
-  const category = await prisma.category.update({
-    where: { id: id },
-    data,
+  const categoryExists = await prisma.category.findUnique({
+    where: { id },
   });
 
-  if (!category) {
+  if (!categoryExists) {
     throw createError({
-      status: 409,
-      message: 'Категории с такмим id не существует',
+      status: 404,
+      message: 'Категория с таким id не существует',
     });
   }
 
-  return category;
+  return prisma.category.update({
+    where: { id },
+    data,
+  });
 });

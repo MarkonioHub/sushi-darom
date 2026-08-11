@@ -1,20 +1,23 @@
 model Product {
   id String @id @default(cuid())
-  categoryId String
-  category Category @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  category Category? @relation(fields: [categoryId], references: [id])
   name String
+  slug String @unique
   image String?
   description String?
   allergens String?
   compound String?
   price String
   oldPrice String?
-  weight Int?
-  pieces Int?
+  weight String?
+  pieces String?
   tags ProductTag[]
-  proteins Decimal? @db.Decimal(5,2)
-  carbs Decimal? @db.Decimal(5,2)
-  fats Decimal? @db.Decimal(5,2)
-  calories Int?
+  proteins String?
+  carbs String?
+  fats String?
+  calories String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   @@map("products")
 }

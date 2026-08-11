@@ -15,30 +15,35 @@ export default defineEventHandler(async (event) => {
 
   const data = result.data;
 
-  const exists = await prisma.city.findUnique({
+  const duplicateSlug = await prisma.category.findFirst({
     where: {
       slug: data.slug,
+      NOT: {
+        id,
+      },
     },
   });
 
-  if (exists) {
+  if (duplicateSlug) {
     throw createError({
       status: 409,
       message: 'Город с таким slug уже существует',
     });
   }
 
-  const city = await prisma.city.update({
-    where: { id: id },
-    data,
+  const cityExists = await prisma.city.findUnique({
+    where: { id },
   });
 
-  if (!city) {
+  if (!cityExists) {
     throw createError({
       status: 409,
       message: 'Города с такмим id не существует',
     });
   }
 
-  return city;
+  return prisma.city.update({
+    where: { id: id },
+    data,
+  });
 });

@@ -48,3 +48,8 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.router-link-exact-active {
+  pointer-events: none;
+  font-weight: 700;
+}

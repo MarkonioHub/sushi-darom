@@ -22,8 +22,7 @@
     modalStore.open(AdminConfirmDelete, 'small', {
       title: `Удалить город '${city.name}'?`,
       buttonText: 'Удалить',
-      handler: cityApi.delete(city.id),
-      callback: () => cityStore.fetchCities(),
+      handler: () => cityApi.delete(city.id),
     });
   }
 

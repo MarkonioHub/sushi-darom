@@ -22,8 +22,7 @@
     modalStore.open(AdminConfirmDelete, 'small', {
       title: `Удалить категорию '${category.name}'?`,
       buttonText: 'Удалить',
-      handler: categoryApi.delete(category.id),
-      callback: () => categoryStore.fetchCategories(),
+      handler: () => categoryApi.delete(category.id),
     });
   }
 
