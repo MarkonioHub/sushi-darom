@@ -1,1 +1,1 @@
-export { usePromoModal } from './hooks/usePromoModal';
+export { usePromoModal } from './composables/usePromoModal';

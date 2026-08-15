@@ -2,12 +2,12 @@ type FooterNavItem =
   | { type: 'link'; text: string; to: string }
   | { type: 'external'; text: string; href: string };
 
-interface FooterNav {
+export interface FooterNav {
   title: string;
   list: FooterNavItem[];
 }
 
-export const FOOTER_NAV = [
+export const FOOTER_NAV: FooterNav[] = [
   {
     title: 'Клиентам',
     list: [
@@ -31,4 +31,4 @@ export const FOOTER_NAV = [
       },
     ],
   },
-] satisfies FooterNav[];
+];

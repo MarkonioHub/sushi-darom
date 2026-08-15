@@ -1,15 +1,18 @@
 <script setup lang="ts">
   import { ProductItem } from '@/entities/product/ui';
   import { useCategoryStore } from '@/entities/category';
-  import { useProductStore } from '@/entities/product';
+  import type { Product } from '@/entities/product';
 
+  interface Props {
+    products: Product[];
+  }
+
+  const { products } = defineProps<Props>();
   const router = useRouter();
   const route = useRoute();
   const sections = new Map<string, HTMLElement>();
   const categoryStory = useCategoryStore();
   const { categories } = storeToRefs(categoryStory);
-  const productStory = useProductStore();
-  const { products } = storeToRefs(productStory);
 
   function setSectionRef(el: Element | ComponentPublicInstance | null, slug: string) {
     if (!el) return;
@@ -67,7 +70,7 @@
   });
 
   function getProductsByCategoryId(categoryId: string) {
-    return products.value.filter((product) => product.categoryId === categoryId);
+    return products.filter((product) => product.categoryId === categoryId);
   }
 </script>
 

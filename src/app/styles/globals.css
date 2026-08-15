@@ -53,3 +53,14 @@ body {
   pointer-events: none;
   font-weight: 700;
 }
+
+.accordion-enter-active,
+.accordion-leave-active {
+  transition: all var(--transition-duration) ease;
+}
+
+.accordion-enter-from,
+.accordion-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}

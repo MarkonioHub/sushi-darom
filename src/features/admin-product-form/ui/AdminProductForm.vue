@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { InputSite } from '@/shared/ui/input-site';
   import { useModalStore } from '@/shared/ui/modal-base';
-  import { useProductStore, createProductSchema, productSchema } from '@/entities/product';
-  import type { Product } from '@/entities/product';
+  import { createProductSchema, productSchema } from '@/entities/product';
+  import { type Product } from '@/entities/product';
   import { createProduct, updateProduct } from '@/entities/product/model/api';
   import { SelectSite } from '@/shared/ui/select-site';
   import { useCategoryStore } from '@/entities/category';
@@ -22,9 +22,10 @@
     title?: string;
     buttonText?: string;
     product?: Product;
+    refresh: Function;
   }
 
-  const props = withDefaults(defineProps<Props>(), {
+  const { title, buttonText, product, refresh } = withDefaults(defineProps<Props>(), {
     title: 'Заголовок формы',
     buttonText: 'Текст кнопки',
   });
@@ -49,36 +50,36 @@
   ] as const;
 
   const initialValuesCommon = {
-    name: props.product?.name || '',
-    slug: props.product?.slug || '',
-    categoryId: props.product?.categoryId || '',
-    image: props.product?.image || '',
+    name: product?.name || '',
+    slug: product?.slug || '',
+    categoryId: product?.categoryId || '',
+    image: product?.image || '',
     imageFile: null,
-    description: props.product?.description || '',
-    allergens: props.product?.allergens || '',
-    compound: props.product?.compound || '',
-    price: props.product?.price || '',
-    oldPrice: props.product?.oldPrice || '',
-    weight: props.product?.weight || '',
-    pieces: props.product?.pieces || '',
-    proteins: props.product?.proteins || '',
-    carbs: props.product?.carbs || '',
-    fats: props.product?.fats || '',
-    calories: props.product?.calories || '',
+    description: product?.description || '',
+    allergens: product?.allergens || '',
+    compound: product?.compound || '',
+    price: product?.price || '',
+    oldPrice: product?.oldPrice || '',
+    weight: product?.weight || '',
+    pieces: product?.pieces || '',
+    proteins: product?.proteins || '',
+    carbs: product?.carbs || '',
+    fats: product?.fats || '',
+    calories: product?.calories || '',
   };
 
   type ProductForm = typeof initialValuesCommon;
 
-  const initialValues = props.product?.id
+  const initialValues = product?.id
     ? {
-        id: props.product?.id || undefined,
+        id: product?.id || undefined,
         ...initialValuesCommon,
       }
     : {
         ...initialValuesCommon,
       };
 
-  const validationSchema = props.product?.id
+  const validationSchema = product?.id
     ? toTypedSchema(productSchema)
     : toTypedSchema(createProductSchema);
 
@@ -96,7 +97,6 @@
   });
 
   const modalStore = useModalStore();
-  const productStore = useProductStore();
   const serverError = ref<string>();
 
   const fields = fieldsConfig.map((fieldConfig) => {
@@ -119,7 +119,7 @@
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const id = props.product?.id;
+      const id = product?.id;
       if (id) {
         await updateProduct(id, { id, ...values });
       } else {
@@ -127,7 +127,7 @@
       }
       modalStore.close();
       handleReset();
-      await productStore.fetchProducts();
+      await refresh();
     } catch (e) {
       serverError.value = (e as Error).message;
     }
@@ -144,7 +144,7 @@
 
 <template>
   <form @submit="onSubmit" :class="['flex', 'flex-col', 'gap-[24px]', 'p-[60px_40px]']">
-    <TitleSite :variant="'secondary'">{{ props.title }}</TitleSite>
+    <TitleSite :variant="'secondary'">{{ title }}</TitleSite>
     <div :class="['w-[100%]']" v-for="field in fields" :key="field.key">
       <div v-if="field.key === 'imageFile'">
         <div>Изображение</div>
@@ -195,7 +195,7 @@
         :disabled="isSubmitting"
         :buttonType="'submit'"
       >
-        {{ props.buttonText }}
+        {{ buttonText }}
       </ButtonSite>
     </div>
     <div v-if="serverError">

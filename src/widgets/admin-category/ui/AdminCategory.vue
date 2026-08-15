@@ -23,6 +23,7 @@
       title: `Удалить категорию '${category.name}'?`,
       buttonText: 'Удалить',
       handler: () => categoryApi.delete(category.id),
+      refresh: () => categoryApi.getAll(),
     });
   }
 

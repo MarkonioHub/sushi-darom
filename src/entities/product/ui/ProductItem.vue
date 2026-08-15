@@ -7,15 +7,9 @@
     product: Product;
   }
 
-  const props = defineProps<Props>();
-
-  const to = computed(() => {
-    return `products/${props.product.slug}`;
-  });
-
-  const imageSrc = computed(() => {
-    return props.product.image ? props.product.image : '/products/placeholder.jpg';
-  });
+  const { product } = defineProps<Props>();
+  const to = computed(() => `/products/${product.slug}`);
+  const imageSrc = computed(() => product.image || '/products/placeholder.jpg');
 </script>
 
 <template>
@@ -57,19 +51,19 @@
       ]"
     >
       <NuxtLink to="#" :class="['text-[24px]', 'font-[600]', 'mb-[8px]']">
-        {{ props.product.name }}
+        {{ product.name }}
       </NuxtLink>
       <div :class="['text-[var(--color-secondary)]', 'text-[16px]', 'leading-[20px]', 'mb-[20px]']">
-        {{ props.product.description }}
+        {{ product.description }}
       </div>
       <div class="mt-auto flex items-center justify-between">
         <div>
           <div class="flex items-center">
             <div :class="['text-[24px]', 'font-[600]', 'leading-[30px]']">
-              {{ formatPriceWithCurrency(props.product.price) }}
+              {{ formatPriceWithCurrency(product.price) }}
             </div>
             <div
-              v-if="props.product.oldPrice"
+              v-if="product.oldPrice"
               :class="[
                 'ml-[10px]',
                 'opacity-[0.5]',
@@ -86,8 +80,9 @@
             </div>
           </div>
           <div class="text-[var(--color-secondary)]">
-            <span v-if="props.product.pieces">56 шт /</span>
-            <span v-if="props.product.weight">1740 гр</span>
+            <span v-if="product.pieces">{{ product.pieces }}</span>
+            <span v-if="product.pieces && product.weight">/</span>
+            <span v-if="product.weight">{{ product.weight }}</span>
           </div>
         </div>
         <CounterProduct />

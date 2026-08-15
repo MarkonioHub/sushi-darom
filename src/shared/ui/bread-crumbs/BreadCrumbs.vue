@@ -1,6 +1,12 @@
 <script setup lang="ts">
   import { useBreadcrumbs } from './useBreadcrumbs';
-  const { breadcrumbs } = useBreadcrumbs();
+
+  interface Props {
+    name: string;
+  }
+
+  const { name } = defineProps<Props>();
+  const { breadcrumbs } = useBreadcrumbs(name);
 </script>
 
 <template>

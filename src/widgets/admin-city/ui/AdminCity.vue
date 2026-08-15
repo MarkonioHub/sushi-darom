@@ -23,6 +23,7 @@
       title: `Удалить город '${city.name}'?`,
       buttonText: 'Удалить',
       handler: () => cityApi.delete(city.id),
+      refresh: () => cityApi.getAll(),
     });
   }
 

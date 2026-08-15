@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { AdminTable } from '@/shared/ui/admin-table';
-  import { useProductStore, productApi } from '@/entities/product';
+  import { productApi } from '@/entities/product';
   import type { AdminTableColumn } from '@/shared/ui/admin-table';
   import type { Product } from '@/entities/product';
   import { AdminProductForm } from '@/features/admin-product-form';
@@ -8,7 +8,12 @@
   import { useModalStore } from '@/shared/ui/modal-base';
   import { formatPriceWithCurrency } from '@/shared/lib';
 
-  const productStore = useProductStore();
+  const {
+    data: products,
+    error,
+    pending,
+    refresh,
+  } = await useAsyncData('products-admin', () => productApi.getAll());
   const modalStore = useModalStore();
 
   function editItem(product: Product) {
@@ -24,6 +29,7 @@
       title: `Удалить продукт '${product.name}'?`,
       buttonText: 'Удалить',
       handler: () => productApi.delete(product.id),
+      refresh: () => refresh(),
     });
   }
 
@@ -31,6 +37,7 @@
     modalStore.open(AdminProductForm, 'small', {
       title: 'Создать продукт',
       buttonText: 'Создать',
+      refresh: () => refresh(),
     });
   }
 
@@ -99,14 +106,17 @@
 
 <template>
   <AdminTable
+    v-if="products"
     :name="'Продукты'"
     :buttonText="'Добавить продукт'"
-    :items="productStore.products"
+    :items="products"
     :columns="columns"
     @edit="editItem"
     @delete="deleteItem"
     @create="createItem"
   />
+  <TitleSite v-else-if="error">Извините, продукты не загрузились</TitleSite>
+  <TitleSite v-else-if="pending">Загрузка...</TitleSite>
 </template>
 
 <style scoped></style>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { useModalStore } from '@/shared/ui/modal-base';
-
   const props = defineProps({
     title: {
       type: String,
@@ -16,6 +14,11 @@
     },
     callback: {
       type: Function,
+      required: true,
+    },
+    refresh: {
+      type: Function,
+      required: true,
     },
   });
 
@@ -26,6 +29,7 @@
     isSubmitting.value = true;
     try {
       await props.handler();
+      await props.refresh();
     } catch (e) {
       serverError.value = (e as Error).message;
     }
@@ -34,7 +38,7 @@
 
 <template>
   <form @submit="onSubmit" :class="['flex', 'flex-col', 'gap-[24px]', 'p-[60px_40px]']">
-    <TitleSite :variant="'secondary'">{{ props.title }}</TitleSite>
+    <TitleSite :variant="'secondary'">{{ title }}</TitleSite>
     <div
       :class="[
         'flex',

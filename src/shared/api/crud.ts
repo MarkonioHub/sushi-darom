@@ -8,6 +8,9 @@ export function createCrudApi<T, CreateT, UpdateT>(baseUrl: string) {
     getById(id: string) {
       return api<T>(`${baseUrl}/${id}`);
     },
+    getBySlug(slug: string) {
+      return api<T>(`${baseUrl}/slug/${encodeURIComponent(slug)}`);
+    },
     create(data: CreateT) {
       return api<T>(baseUrl, {
         method: 'POST',
