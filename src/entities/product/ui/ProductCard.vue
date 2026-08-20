@@ -17,7 +17,7 @@
   const placeholderImageSrc = '/products/placeholder.jpg';
 
   const imageSrc = computed(() => {
-    return product.image ? product.image : placeholderImageSrc;
+    return product.image || placeholderImageSrc;
   });
 </script>
 

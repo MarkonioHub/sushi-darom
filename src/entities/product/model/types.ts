@@ -54,3 +54,9 @@ export interface UpdateProduct {
   fats?: string;
   calories?: string;
 }
+
+export interface ProductSearchResult {
+  name: string;
+  slug: string;
+  image?: string;
+}

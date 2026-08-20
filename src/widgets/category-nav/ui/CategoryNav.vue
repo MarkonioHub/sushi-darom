@@ -47,7 +47,7 @@
       <TitleSite :variant="'secondary'">Меню</TitleSite>
     </ContainerSite>
   </div>
-  <div class="sticky top-[var(--header-height)] z-[10] bg-[#ffffff] p-[0_0_10px] lg:py-[10px]">
+  <div class="sticky top-[var(--header-height)] z-[10] bg-[#ffffff] p-[10px_0] lg:py-[10px]">
     <ContainerSite>
       <nav>
         <ul

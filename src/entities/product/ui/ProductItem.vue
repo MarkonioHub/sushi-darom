@@ -13,7 +13,7 @@
 </script>
 
 <template>
-  <div :class="['flex', 'flex-col', 'group']">
+  <div :class="['flex', 'flex-col', 'group', 'max-w-[400px]', 'lg:max-w-[100%]']">
     <NuxtLink
       :to="to"
       :class="['relative', 'overflow-hidden', 'aspect-square', 'mb-[24px]', 'rounded-[16px]']"

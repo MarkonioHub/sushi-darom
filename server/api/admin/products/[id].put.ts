@@ -1,4 +1,4 @@
-import { createProductSchema, productSchema } from '@/entities/product';
+import { createProductSchema } from '@/entities/product';
 import { prisma } from '#server/utils/prisma';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';

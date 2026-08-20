@@ -9,19 +9,13 @@
     description: `Суши Даром в Краснодаре предлагает быструю и удобную доставку суши и роллов.`,
   });
 
-  const {
-    data: products,
-    error,
-    pending,
-  } = await useAsyncData('products', () => productApi.getAll());
+  const { data: products } = await useAsyncData('products', () => productApi.getAll());
 </script>
 
 <template>
   <PromoSlider />
   <CategoryNav />
   <ProductTile v-if="products" :products="products" />
-  <TitleSite v-else-if="error">Извините, каталог не загрузился</TitleSite>
-  <TitleSite v-else-if="pending">Загрузка...</TitleSite>
 </template>
 
 <style scoped></style>

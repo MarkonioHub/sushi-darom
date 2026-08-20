@@ -7,12 +7,23 @@
   });
 
   const model = defineModel();
+
+  const inputRef = ref<HTMLElement | null>(null);
+
+  function focusInput() {
+    inputRef.value?.focus();
+  }
+
+  defineExpose({
+    focusInput,
+  });
 </script>
 
 <template>
   <input
     v-bind="$attrs"
     v-model="model"
+    ref="inputRef"
     :type="props.type"
     :name="props.name"
     :placeholder="props.placeholder"

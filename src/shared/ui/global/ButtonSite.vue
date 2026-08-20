@@ -26,7 +26,14 @@
       'transition-colors',
       'duration-[var(--transition-duration)]',
     ],
-    secondary: [''],
+    secondary: [
+      'border',
+      'border-[var(--color-primary)]',
+      'bg-[#ffffff]',
+      'hover:text-[var(--color-secondary)]',
+      'transition-colors',
+      'duration-[var(--transition-duration)]',
+    ],
   };
 
   const className = computed(() => [

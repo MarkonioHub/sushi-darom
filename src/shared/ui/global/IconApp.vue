@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <Icon :name="name" />
+  <Icon :name="name" v-bind="$attrs" />
 </template>
 
 <style scoped></style>
