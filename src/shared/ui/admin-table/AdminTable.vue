@@ -1,11 +1,12 @@
 <script setup lang="ts" generic="T extends { id: string }">
-  import type { AdminTableColumn } from './types';
+  import { type AdminTableColumn, type AdminTableAction } from './types';
 
   interface Props {
     name: string;
-    buttonText: string;
+    buttonCreateText?: string;
     items: T[];
     columns: AdminTableColumn<T>[];
+    actions?: AdminTableAction[];
   }
 
   interface Emits {
@@ -14,7 +15,9 @@
     create: [];
   }
 
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    actions: () => ['edit', 'delete'] satisfies AdminTableAction[],
+  });
   const emit = defineEmits<Emits>();
 </script>
 
@@ -32,7 +35,9 @@
             {{ column.label }}
           </th>
 
-          <th :class="['border', 'border-[var(--color-orange)]', 'p-[10px]']">Действия</th>
+          <th :class="['border', 'border-[var(--color-orange)]', 'p-[10px]']" v-if="actions.length">
+            Действия
+          </th>
         </tr>
       </thead>
 
@@ -49,6 +54,7 @@
                 :src="String(item[column.key])"
                 :class="['w-[100px]']"
               />
+              <a :href="String(item[column.key])" v-else-if="column.type === 'file'">Файл</a>
               <span v-else-if="column.format">
                 {{ column.format(item) }}
               </span>
@@ -57,17 +63,23 @@
           </td>
 
           <td :class="['border', 'border-[var(--color-orange)]', 'p-[10px]']">
-            <button :class="['mr-[10px]']" @click="emit('edit', item)">
+            <button
+              :class="['mr-[10px]']"
+              @click="emit('edit', item)"
+              v-if="actions.includes('edit')"
+            >
               <IconApp name="app:edit" :class="['h-[24px]', 'w-[24px]']" />
             </button>
 
-            <button @click="emit('delete', item)">
+            <button @click="emit('delete', item)" v-if="actions.includes('delete')">
               <IconApp name="app:delete" :class="['h-[24px]', 'w-[24px]']" />
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <ButtonSite :type="'button'" @click="emit('create')">{{ buttonText }}</ButtonSite>
+    <ButtonSite :type="'button'" @click="emit('create')" v-if="buttonCreateText">
+      {{ buttonCreateText }}
+    </ButtonSite>
   </div>
 </template>

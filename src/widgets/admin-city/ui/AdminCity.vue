@@ -50,7 +50,7 @@
 <template>
   <AdminTable
     :name="'Города'"
-    :buttonText="'Добавить город'"
+    :buttonCreateText="'Добавить город'"
     :items="cityStore.cities"
     :columns="columns"
     @edit="editItem"

@@ -14,6 +14,7 @@
     pending,
     refresh,
   } = await useAsyncData('products-admin', () => productApi.getAll());
+
   const modalStore = useModalStore();
 
   function editItem(product: Product) {
@@ -108,7 +109,7 @@
   <AdminTable
     v-if="products"
     :name="'Продукты'"
-    :buttonText="'Добавить продукт'"
+    :buttonCreateText="'Добавить продукт'"
     :items="products"
     :columns="columns"
     @edit="editItem"

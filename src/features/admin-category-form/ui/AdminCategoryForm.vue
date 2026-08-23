@@ -16,23 +16,20 @@
     category?: Category;
   }
 
-  const props = withDefaults(defineProps<Props>(), {
-    title: 'Заголовок формы',
-    buttonText: 'Текст кнопки',
-  });
+  const { title = 'Заголовок формы', buttonText = 'Текст кнопки', category } = defineProps<Props>();
 
-  const initialValues = props.category?.id
+  const initialValues = category?.id
     ? {
-        id: props.category?.id || undefined,
-        name: props.category?.name || '',
-        slug: props.category?.slug || '',
+        id: category?.id || undefined,
+        name: category?.name || '',
+        slug: category?.slug || '',
       }
     : {
-        name: props.category?.name || '',
-        slug: props.category?.slug || '',
+        name: category?.name || '',
+        slug: category?.slug || '',
       };
 
-  const validationSchema = props.category?.id
+  const validationSchema = category?.id
     ? toTypedSchema(categorySchema)
     : toTypedSchema(createCategorySchema);
 
@@ -62,7 +59,7 @@
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const id = props.category?.id;
+      const id = category?.id;
       if (id) {
         await categoryApi.update(id, { ...values, isActive: true });
       } else {
@@ -79,7 +76,7 @@
 
 <template>
   <form @submit="onSubmit" :class="['flex', 'flex-col', 'gap-[24px]', 'p-[60px_40px]']">
-    <TitleSite :variant="'secondary'">{{ props.title }}</TitleSite>
+    <TitleSite :variant="'secondary'">{{ title }}</TitleSite>
     <div :class="['w-[100%]']">
       <InputSite
         @input="clearError('name')"
@@ -124,7 +121,7 @@
         :disabled="isSubmitting"
         :buttonType="'submit'"
       >
-        {{ props.buttonText }}
+        {{ buttonText }}
       </ButtonSite>
     </div>
     <div v-if="serverError">

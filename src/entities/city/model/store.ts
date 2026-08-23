@@ -7,6 +7,11 @@ export const useCityStore = defineStore('city', () => {
 
   async function fetchCities() {
     cities.value = await cityApi.getAll();
+    if (cities.value[0]) setCurrentCity(cities.value[0]);
+  }
+
+  function setCurrentCity(city: City) {
+    currentCity.value = city;
   }
 
   return {

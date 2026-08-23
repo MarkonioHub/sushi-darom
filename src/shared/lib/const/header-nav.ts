@@ -19,4 +19,5 @@ export const HEADER_ADMIN_NAV: HeaderNavItem[] = [
   { type: 'link', text: 'Категории', to: '/admin/categories' },
   { type: 'link', text: 'Продукты', to: '/admin/products' },
   { type: 'link', text: 'Теги продуктов', to: '/admin/product-tags' },
+  { type: 'link', text: 'Отзывы', to: '/admin/reviews' },
 ];

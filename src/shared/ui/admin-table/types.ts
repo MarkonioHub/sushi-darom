@@ -1,4 +1,5 @@
-type AdminTableColumnType = 'text' | 'image';
+type AdminTableColumnType = 'text' | 'image' | 'file';
+export type AdminTableAction = 'edit' | 'delete';
 
 export interface AdminTableColumn<T> {
   key: keyof T;

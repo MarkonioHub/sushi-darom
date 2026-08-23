@@ -2,11 +2,11 @@
   import { useBreadcrumbs } from './useBreadcrumbs';
 
   interface Props {
-    name: string;
+    name?: string;
   }
 
   const { name } = defineProps<Props>();
-  const { breadcrumbs } = useBreadcrumbs(name);
+  const { breadcrumbs } = useBreadcrumbs(name || '');
 </script>
 
 <template>

@@ -25,10 +25,12 @@
     refresh: Function;
   }
 
-  const { title, buttonText, product, refresh } = withDefaults(defineProps<Props>(), {
-    title: 'Заголовок формы',
-    buttonText: 'Текст кнопки',
-  });
+  const {
+    title = 'Заголовок формы',
+    buttonText = 'Текст кнопки',
+    product,
+    refresh,
+  } = defineProps<Props>();
 
   const fieldsConfig = [
     { key: 'name', placeholder: 'Название продукта' },

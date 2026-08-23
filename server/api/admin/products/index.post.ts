@@ -3,7 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import { prisma } from '@/../server/utils/prisma';
-import { createProductSchema } from '@/entities/product';
+import { createProductSchema, imageSize } from '@/entities/product';
 
 export default defineEventHandler(async (event) => {
   const formData = await readMultipartFormData(event);
@@ -56,9 +56,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    const maxSize = 5 * 1024 * 1024;
-
-    if (image.data.length > maxSize) {
+    if (image.data.length > imageSize) {
       throw createError({
         status: 400,
         statusText: 'Размер изображения не должен превышать 5 МБ',

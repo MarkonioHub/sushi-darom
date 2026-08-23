@@ -1,60 +1,45 @@
 <script setup lang="ts">
-  import { z } from 'zod';
-  import { toTypedSchema } from '@vee-validate/zod';
   import { vMaska } from 'maska/vue';
   import { InputSite } from '@/shared/ui/input-site';
   import { TextareaSite } from '@/shared/ui/textarea-site';
-  import { SelectSite } from '@/shared/ui/select-site';
-  import { ModalThanks } from '@/entities/review';
+  import { SelectSite, type SelectOption } from '@/shared/ui/select-site';
+  import { type CreateReview, reviewSchema } from '@/entities/review';
+  import { ReviewThanks } from '@/entities/review/ui';
   import { useModalStore } from '@/shared/ui/modal-base';
-  import type { SelectOption } from '@/shared/ui/select-site';
+  import { useCityStore, type City } from '@/entities/city';
+  import { createReview } from '@/entities/review/model/api';
+
+  const cityStore = useCityStore();
+  const { cities, currentCity } = storeToRefs(cityStore);
+
+  const cityOptions = computed(() => {
+    return cities.value.map((city: City) => ({
+      label: city.name,
+      value: city.id,
+    }));
+  });
 
   const modalStore = useModalStore();
-  const fileTypes = [
-    'application/pdf',
-    'image/jpeg',
-    'image/png',
-    'application/rtf',
-    'text/rtf',
-    'application/msword',
-    'text/plain',
-  ];
-  const fileSize = 5 * 1024 * 1024;
 
-  const validationSchema = toTypedSchema(
-    z.object({
-      name: z.string().min(1, 'Имя обязательно для заполнения'),
-      surname: z.string().optional(),
-      phone: z
-        .string()
-        .min(1, 'Телефон обязателен для заполнения')
-        .length(18, 'Укажите полный номер телефона'),
-      email: z.string().email('Некорректный формат email').optional().or(z.literal('')),
-      city: z.string().min(1, 'Выберите город'),
-      theme: z.string().min(1, 'Выберите тему отзыва'),
-      message: z.string().min(1, 'Опишите отзыв'),
-      file: z
-        .instanceof(File)
-        .optional()
-        .refine((val) => !val || val.size <= fileSize, `Максимальный размер файла 5 МБ`)
-        .refine(
-          (val) => !val || fileTypes.includes(val.type),
-          'Только форматы .pdf, .jpeg, .png, .rtf, .doc, .txt'
-        ),
-    })
-  );
-
-  const { handleSubmit, errors, defineField, handleReset, isSubmitting, setFieldError } = useForm({
-    validationSchema,
+  const {
+    handleSubmit,
+    errors,
+    defineField,
+    handleReset,
+    isSubmitting,
+    setFieldError,
+    setFieldValue,
+  } = useForm<CreateReview>({
+    validationSchema: toTypedSchema(reviewSchema),
     initialValues: {
       name: '',
       surname: '',
       phone: '',
       email: '',
-      city: 'krasnodar-id',
-      theme: '',
+      city: currentCity.value?.id || '',
+      theme: 'Благодарность',
       message: '',
-      file: undefined,
+      file: null,
     },
   });
   const fileInputRef = ref<HTMLInputElement | null>(null);
@@ -81,7 +66,10 @@
     validateOnModelUpdate: false,
     validateOnBlur: false,
   });
-  const { value: file, setValue: setFileValue } = useField<File | undefined>('file');
+  const [file] = defineField('file', {
+    validateOnModelUpdate: false,
+    validateOnBlur: false,
+  });
 
   const clearError = (field: 'name' | 'surname' | 'phone' | 'email' | 'message' | 'file') => {
     if (errors.value[field]) {
@@ -89,50 +77,28 @@
     }
   };
 
-  const onFileChange = (event: Event) => {
+  function onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+
+    setFieldValue('file', file);
     clearError('file');
-    const target = event.target as HTMLInputElement;
-    const selectedFile = target.files?.[0];
-
-    if (!selectedFile) {
-      setFileValue(undefined);
-      return;
-    }
-
-    const isWrongType = !fileTypes.includes(selectedFile.type);
-    const isWrongSize = selectedFile.size > fileSize;
-
-    if (isWrongType || isWrongSize) {
-      setFileValue(undefined);
-      if (fileInputRef.value) {
-        fileInputRef.value.value = '';
-      }
-      if (isWrongSize) {
-        setFieldError('file', 'Максимальный размер файла 5 МБ');
-      } else {
-        setFieldError('file', 'Только форматы .pdf, .jpeg, .png, .rtf, .doc, .txt');
-      }
-    } else {
-      setFileValue(selectedFile);
-    }
-  };
+  }
 
   const onSubmit = handleSubmit(async (values) => {
-    console.log('Отправка данных: ', values);
-    modalStore.open(ModalThanks, 'small');
+    await createReview(values);
+    await modalStore.open(ReviewThanks, 'small', {});
     handleReset();
   });
 
-  const optionsCity = ref<SelectOption[]>([
-    { label: 'Краснодар', value: 'krasnodar-id' },
-    { label: 'Сочи', value: 'sochi-id' },
-  ]);
-
   const optionsTheme = ref<SelectOption[]>([
-    { label: 'Благодарность', value: 'id-1' },
-    { label: 'Вопрос/консультация', value: 'id-2' },
-    { label: 'Пожаловаться', value: 'id-3' },
-    { label: 'Замечания по работе сайта/приложения', value: 'id-4' },
+    { label: 'Благодарность', value: 'Благодарность' },
+    { label: 'Вопрос/консультация', value: 'Вопрос/консультация' },
+    { label: 'Пожаловаться', value: 'Пожаловаться' },
+    {
+      label: 'Замечания по работе сайта/приложения',
+      value: 'Замечания по работе сайта/приложения',
+    },
   ]);
 </script>
 
@@ -197,7 +163,12 @@
       </div>
     </div>
     <div :class="['lg:w-[calc(50%-12px)]', 'w-[100%]']">
-      <SelectSite v-model="city" :options="optionsCity" :error="errors.city" />
+      <SelectSite
+        v-model="city"
+        :options="cityOptions"
+        :error="errors.city"
+        :placeholder="'Выберите город'"
+      />
       <div v-if="errors.city" :class="['text-[var(--color-error)]', 'mt-[4px]']">
         {{ errors.city }}
       </div>

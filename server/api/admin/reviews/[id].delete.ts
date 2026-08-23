@@ -4,29 +4,29 @@ import { getImagePath } from '#server/utils/get-image-path';
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
 
-  const product = await prisma.product.findUnique({
+  const review = await prisma.review.findUnique({
     where: { id: id },
   });
 
-  if (!product) {
+  if (!review) {
     throw createError({
       status: 404,
-      message: 'Продукта с таким id не существует',
+      message: 'Отзыва с таким id не существует',
     });
   }
 
-  await prisma.product.delete({
+  await prisma.review.delete({
     where: {
       id: id,
     },
   });
 
-  if (product.image) {
-    const imagePath = getImagePath(product.image);
+  if (review.file) {
+    const imagePath = getImagePath(review.file);
     try {
       await unlink(imagePath);
     } catch (error) {
-      console.log('Не удалось удалить изображение продукта: ', error);
+      console.log('Не удалось удалить файл отзыва: ', error);
     }
   }
 });

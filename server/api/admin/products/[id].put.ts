@@ -3,7 +3,7 @@ import { prisma } from '#server/utils/prisma';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
-import { getProductImagePath } from '#server/utils/get-product-image-path';
+import { getImagePath } from '#server/utils/get-image-path';
 
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
@@ -90,7 +90,7 @@ export default defineEventHandler(async (event) => {
     imagePath = `/products/${filename}`;
 
     if (data.image) {
-      const imagePath = getProductImagePath(data.image);
+      const imagePath = getImagePath(data.image);
       try {
         await unlink(imagePath);
       } catch (error) {

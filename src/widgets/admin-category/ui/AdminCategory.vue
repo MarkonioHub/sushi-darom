@@ -53,7 +53,7 @@
 <template>
   <AdminTable
     :name="'Категории'"
-    :buttonText="'Добавить категорию'"
+    :buttonCreateText="'Добавить категорию'"
     :items="categoryStore.categories"
     :columns="columns"
     @edit="editItem"
