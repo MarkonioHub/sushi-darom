@@ -12,6 +12,7 @@ export const HEADER_NAV: HeaderNavItem[] = [
 
 export const HEADER_ADMIN_NAV: HeaderNavItem[] = [
   { type: 'link', text: 'Перейти на сайт', to: '/' },
+  { type: 'link', text: 'Акции', to: '/admin/promos' },
   { type: 'link', text: 'Города', to: '/admin/cities' },
   { type: 'link', text: 'Рестораны', to: '/admin/restaurants' },
   { type: 'link', text: 'Предприниматели', to: '/admin/owners' },

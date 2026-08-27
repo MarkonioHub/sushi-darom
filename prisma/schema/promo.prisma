@@ -1,0 +1,11 @@
+model Promo {
+  id String @id @default(cuid())
+  slug String @unique
+  name String
+  content String
+  imageVertical String
+  imageHorizontal String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  @@map("promos")
+}

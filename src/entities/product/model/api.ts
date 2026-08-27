@@ -13,7 +13,7 @@ export function createProduct(data: CreateProduct) {
   });
 }
 
-export function updateProduct(id: string, data: Product) {
+export function updateProduct(id: string, data: UpdateProduct) {
   return api<Product>(`/api/admin/products/${id}`, {
     method: 'PUT',
     body: createFormData(data),

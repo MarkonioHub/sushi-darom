@@ -1,9 +1,8 @@
-import { randomUUID } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
-import path from 'node:path';
-
 import { prisma } from '@/../server/utils/prisma';
-import { createProductSchema, imageSize } from '@/entities/product';
+import { productSchema } from '@/entities/product';
+import { validateImage } from '#server/utils/validate-image';
+import { saveFile } from '#server/utils/save-file';
+import { validateEntityExist } from '#server/utils/validate-entity-exist';
 
 export default defineEventHandler(async (event) => {
   const formData = await readMultipartFormData(event);
@@ -24,7 +23,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const result = createProductSchema.safeParse(fields);
+  const result = productSchema.safeParse(fields);
 
   if (!result.success) {
     throw createError({
@@ -35,45 +34,14 @@ export default defineEventHandler(async (event) => {
 
   const data = result.data;
 
-  const exists = await prisma.product.findUnique({
-    where: {
-      slug: data.slug,
-    },
-  });
+  await validateEntityExist(
+    (args) => prisma.product.findUnique(args),
+    { where: { slug: data.slug } },
+    'Продукт с таким slug не существует'
+  );
 
-  if (exists) {
-    throw createError({
-      status: 409,
-      statusText: 'Продукт с таким slug уже существует',
-    });
-  }
-
-  if (image) {
-    if (!image.type?.startsWith('image/')) {
-      throw createError({
-        status: 400,
-        statusText: 'Файл должен быть изображением',
-      });
-    }
-
-    if (image.data.length > imageSize) {
-      throw createError({
-        status: 400,
-        statusText: 'Размер изображения не должен превышать 5 МБ',
-      });
-    }
-  }
-
-  let imagePath = '';
-
-  if (image?.data && image.filename) {
-    const extension = path.extname(image.filename).toLowerCase();
-    const filename = `${randomUUID()}${extension}`;
-    const productsDir = path.join(process.cwd(), 'public', 'products');
-    await mkdir(productsDir, { recursive: true });
-    await writeFile(path.join(productsDir, filename), image.data);
-    imagePath = `/products/${filename}`;
-  }
+  validateImage(image);
+  const imagePath = await saveFile(image, 'products');
 
   return prisma.product.create({
     data: {

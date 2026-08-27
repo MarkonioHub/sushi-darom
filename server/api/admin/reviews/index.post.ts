@@ -1,7 +1,5 @@
 import { fileSize, fileTypes, reviewSchema } from '@/entities/review';
-import path from 'node:path';
-import { randomUUID } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { saveFile } from '#server/utils/save-file';
 
 export default defineEventHandler(async (event) => {
   const formData = await readMultipartFormData(event);
@@ -48,16 +46,7 @@ export default defineEventHandler(async (event) => {
 
   const data = result.data;
 
-  let filePath = '';
-
-  if (file?.data && file.filename) {
-    const extension = path.extname(file.filename).toLowerCase();
-    const filename = `${randomUUID()}${extension}`;
-    const productsDir = path.join(process.cwd(), 'public', 'reviews');
-    await mkdir(productsDir, { recursive: true });
-    await writeFile(path.join(productsDir, filename), file.data);
-    filePath = `/reviews/${filename}`;
-  }
+  const filePath = await saveFile(file, 'reviews');
 
   return prisma.review.create({
     data: {

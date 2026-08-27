@@ -1,9 +1,9 @@
-import { createProductSchema } from '@/entities/product';
+import { productSchema } from '@/entities/product';
 import { prisma } from '#server/utils/prisma';
-import path from 'node:path';
-import { randomUUID } from 'node:crypto';
-import { mkdir, unlink, writeFile } from 'node:fs/promises';
-import { getImagePath } from '#server/utils/get-image-path';
+import { validateImage } from '#server/utils/validate-image';
+import { saveFile } from '#server/utils/save-file';
+import { validateDuplicateSlug } from '#server/utils/validate-duplicate-slug';
+import { validateEntityExist } from '#server/utils/validate-entity-exist';
 
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
@@ -17,15 +17,15 @@ export default defineEventHandler(async (event) => {
   }
 
   const fields: Record<string, string> = {};
-  const image = formData.find((item) => item.name === 'imageFile');
+  const image = formData.find((item) => item.name === 'image');
 
   for (const item of formData) {
-    if (item.name !== 'imageFile' && item.data) {
+    if (item.name !== 'image' && item.data) {
       fields[item.name!] = item.data.toString();
     }
   }
 
-  const result = createProductSchema.safeParse(fields);
+  const result = productSchema.safeParse(fields);
   if (!result.success) {
     throw createError({
       status: 422,
@@ -34,70 +34,20 @@ export default defineEventHandler(async (event) => {
   }
 
   const data = result.data;
+  await validateDuplicateSlug(
+    (args) => prisma.product.findFirst(args),
+    { where: { slug: data.slug, id: { not: id } } },
+    'Продукт с таким slug уже существует'
+  );
+  validateImage(image);
 
-  const duplicateSlug = await prisma.product.findFirst({
-    where: {
-      slug: data.slug,
-      NOT: {
-        id,
-      },
-    },
-  });
+  await validateEntityExist(
+    (args) => prisma.product.findUnique(args),
+    { where: { id } },
+    'Продукта с таким id не существует'
+  );
 
-  if (duplicateSlug) {
-    throw createError({
-      status: 409,
-      message: 'Продукт с таким slug уже существует',
-    });
-  }
-
-  if (image) {
-    if (!image.type?.startsWith('image/')) {
-      throw createError({
-        status: 400,
-        statusText: 'Файл должен быть изображением',
-      });
-    }
-
-    const maxSize = 5 * 1024 * 1024;
-
-    if (image.data.length > maxSize) {
-      throw createError({
-        status: 400,
-        statusText: 'Размер изображения не должен превышать 5 МБ',
-      });
-    }
-  }
-
-  const productExists = await prisma.product.findUnique({
-    where: { id },
-  });
-
-  if (!productExists) {
-    throw createError({
-      status: 404,
-      message: 'Продукт с таким id не существует',
-    });
-  }
-
-  let imagePath = data.image;
-  if (image?.data && image?.filename) {
-    const extension = path.extname(image.filename).toLowerCase();
-    const filename = `${randomUUID()}${extension}`;
-    const productsDir = path.join(process.cwd(), 'public', 'products');
-    await mkdir(productsDir, { recursive: true });
-    await writeFile(path.join(productsDir, filename), image.data);
-    imagePath = `/products/${filename}`;
-
-    if (data.image) {
-      const imagePath = getImagePath(data.image);
-      try {
-        await unlink(imagePath);
-      } catch (error) {
-        console.log('Не удалось удалить изображение продукта: ', error);
-      }
-    }
-  }
+  const imagePath = await saveFile(image, 'products', data.image);
 
   return prisma.product.update({
     where: { id },

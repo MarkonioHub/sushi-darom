@@ -1,19 +1,15 @@
-import { unlink } from 'node:fs/promises';
-import { getImagePath } from '#server/utils/get-image-path';
+import { deleteFile } from '#server/utils/delete-file';
+import { validateEntityExist } from '#server/utils/validate-entity-exist';
+import { prisma } from '#server/utils/prisma';
 
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
 
-  const product = await prisma.product.findUnique({
-    where: { id: id },
-  });
-
-  if (!product) {
-    throw createError({
-      status: 404,
-      message: 'Продукта с таким id не существует',
-    });
-  }
+  const product = await validateEntityExist(
+    (args) => prisma.product.findUnique(args),
+    { where: { id } },
+    'Продукта с таким id не существует'
+  );
 
   await prisma.product.delete({
     where: {
@@ -21,12 +17,5 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  if (product.image) {
-    const imagePath = getImagePath(product.image);
-    try {
-      await unlink(imagePath);
-    } catch (error) {
-      console.log('Не удалось удалить изображение продукта: ', error);
-    }
-  }
+  await deleteFile(product.image);
 });

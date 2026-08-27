@@ -45,6 +45,7 @@
     'inline-flex',
     'justify-center',
     'font-[600]',
+    'disabled:opacity-50',
   ]);
 </script>
 

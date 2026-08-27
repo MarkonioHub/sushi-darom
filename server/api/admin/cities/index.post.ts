@@ -1,9 +1,10 @@
 import { prisma } from '@/../server/utils/prisma';
-import { createCitySchema } from '@/entities/city';
+import { citySchema } from '@/entities/city';
+import { validateEntityExist } from '#server/utils/validate-entity-exist';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const result = createCitySchema.safeParse(body);
+  const result = citySchema.safeParse(body);
 
   if (!result.success) {
     throw createError({
@@ -14,18 +15,11 @@ export default defineEventHandler(async (event) => {
 
   const data = result.data;
 
-  const exists = await prisma.city.findUnique({
-    where: {
-      slug: data.slug,
-    },
-  });
-
-  if (exists) {
-    throw createError({
-      status: 409,
-      message: 'Город с таким slug уже существует',
-    });
-  }
+  await validateEntityExist(
+    (args) => prisma.city.findUnique(args),
+    { where: { slug: data.slug } },
+    'Город с таким slug не существует'
+  );
 
   return prisma.city.create({
     data,

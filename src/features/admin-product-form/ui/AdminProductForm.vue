@@ -1,9 +1,13 @@
 <script setup lang="ts">
   import { InputSite } from '@/shared/ui/input-site';
   import { useModalStore } from '@/shared/ui/modal-base';
-  import { createProductSchema, productSchema } from '@/entities/product';
-  import { type Product } from '@/entities/product';
-  import { createProduct, updateProduct } from '@/entities/product/model/api';
+  import {
+    type Product,
+    productSchema,
+    createProduct,
+    updateProduct,
+    type CreateProduct,
+  } from '@/entities/product';
   import { SelectSite } from '@/shared/ui/select-site';
   import { useCategoryStore } from '@/entities/category';
 
@@ -23,6 +27,25 @@
     buttonText?: string;
     product?: Product;
     refresh: Function;
+  }
+
+  interface ProductForm {
+    name: string;
+    slug: string;
+    categoryId: string;
+    image: string;
+    imageFile: File | null;
+    description: string;
+    allergens: string;
+    compound: string;
+    price: string;
+    oldPrice: string;
+    weight: string;
+    pieces: string;
+    proteins: string;
+    carbs: string;
+    fats: string;
+    calories: string;
   }
 
   const {
@@ -51,39 +74,24 @@
     { key: 'calories', placeholder: 'Калории' },
   ] as const;
 
-  const initialValuesCommon = {
-    name: product?.name || '',
-    slug: product?.slug || '',
-    categoryId: product?.categoryId || '',
-    image: product?.image || '',
+  const initialValues: ProductForm = {
+    name: product?.name ?? '',
+    slug: product?.slug ?? '',
+    categoryId: product?.categoryId ?? '',
+    image: product?.image ?? '',
     imageFile: null,
-    description: product?.description || '',
-    allergens: product?.allergens || '',
-    compound: product?.compound || '',
-    price: product?.price || '',
-    oldPrice: product?.oldPrice || '',
-    weight: product?.weight || '',
-    pieces: product?.pieces || '',
-    proteins: product?.proteins || '',
-    carbs: product?.carbs || '',
-    fats: product?.fats || '',
-    calories: product?.calories || '',
+    description: product?.description ?? '',
+    allergens: product?.allergens ?? '',
+    compound: product?.compound ?? '',
+    price: product?.price ?? '',
+    oldPrice: product?.oldPrice ?? '',
+    weight: product?.weight ?? '',
+    pieces: product?.pieces ?? '',
+    proteins: product?.proteins ?? '',
+    carbs: product?.carbs ?? '',
+    fats: product?.fats ?? '',
+    calories: product?.calories ?? '',
   };
-
-  type ProductForm = typeof initialValuesCommon;
-
-  const initialValues = product?.id
-    ? {
-        id: product?.id || undefined,
-        ...initialValuesCommon,
-      }
-    : {
-        ...initialValuesCommon,
-      };
-
-  const validationSchema = product?.id
-    ? toTypedSchema(productSchema)
-    : toTypedSchema(createProductSchema);
 
   const {
     handleSubmit,
@@ -93,8 +101,8 @@
     isSubmitting,
     setFieldError,
     setFieldValue,
-  } = useForm({
-    validationSchema: validationSchema,
+  } = useForm<ProductForm>({
+    validationSchema: toTypedSchema(productSchema),
     initialValues: initialValues,
   });
 
@@ -122,14 +130,19 @@
   const onSubmit = handleSubmit(async (values) => {
     try {
       const id = product?.id;
+      const { image: _image, imageFile: _imageFile, ...data } = values;
+      const valuesSorted: CreateProduct = {
+        image: values.imageFile,
+        ...data,
+      };
       if (id) {
-        await updateProduct(id, { id, ...values });
+        await updateProduct(id, valuesSorted);
       } else {
-        await createProduct(values);
+        await createProduct(valuesSorted);
       }
-      modalStore.close();
-      handleReset();
       await refresh();
+      handleReset();
+      modalStore.close();
     } catch (e) {
       serverError.value = (e as Error).message;
     }
@@ -159,7 +172,9 @@
           :class="['w-[100%]', errors[field.key] ? 'border-[var(--color-error)]' : '']"
         />
       </div>
-      <div v-else-if="field.key === 'image'"></div>
+      <div v-else-if="field.key === 'image'">
+        <NuxtImg :src="field.value.value" />
+      </div>
       <div v-else-if="field.key === 'categoryId'">
         <SelectSite
           v-model="field.value.value"

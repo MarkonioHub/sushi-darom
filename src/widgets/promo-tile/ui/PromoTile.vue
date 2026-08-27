@@ -1,16 +1,24 @@
 <script setup lang="ts">
-  import { usePromoModal } from '@/entities/promo';
-
+  import { usePromoModal } from '@/entities/promo/composables';
+  import type { Promo } from '@/entities/promo';
   const { pushQuery } = usePromoModal();
+
+  interface Props {
+    promos: Promo[];
+  }
+
+  const { promos } = defineProps<Props>();
 </script>
 
 <template>
-  <div class="[mb-[80px]]">
+  <div :class="['mb-[80px]']">
     <ContainerSite>
-      <TitleSite class="mb-[30px]" :tag="'h1'">Акции</TitleSite>
+      <TitleSite :class="['mb-[30px]']" :tag="'h1'">Акции</TitleSite>
       <div :class="['flex', 'flex-wrap', 'sm:gap-[20px]', 'gap-[10px]']">
         <div
-          @click="pushQuery('1')"
+          v-for="promo in promos"
+          :key="promo.id"
+          @click="pushQuery(promo.slug)"
           :class="[
             'cursor-pointer',
             'rounded-[8px]',
@@ -22,28 +30,14 @@
             'border',
             'border-solid',
             'border-[transparent]',
+            'overflow-hidden',
             'hover:border-[#000]',
             'transition-all',
             'duration-[var(--transition-duration)]',
           ]"
-          v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]"
-          :key="index"
         >
-          <NuxtImg
-            src="/examples/promo-vertical.png"
-            :class="['lg:rounded-[16px_16px_0_0]', 'rounded-[8px_8px_0_0]']"
-          />
-          <div
-            :class="[
-              'bg-[#ffffff]',
-              'lg:rounded-[16px]',
-              'translate-y-[-10px]',
-              'lg:translate-y-[-20px]',
-              'lg:p-[10px]',
-              'p-[6px]',
-              'rounded-[8px]',
-            ]"
-          >
+          <NuxtImg :src="promo.imageVertical" />
+          <div :class="['bg-[#ffffff]', 'lg:p-[10px]', 'p-[6px]']">
             <div
               :class="[
                 'text-[13px]',
@@ -56,7 +50,7 @@
                 'whitespace-nowrap',
               ]"
             >
-              УСПЕЙ ВЗЯТЬ ЭКСКЛЮЗИВ!
+              {{ promo.name }}
             </div>
             <div
               :class="[
@@ -68,11 +62,10 @@
                 'text-ellipsis',
                 'overflow-hidden',
                 'whitespace-nowrap',
+                'h-[22px]',
               ]"
-            >
-              Мы собрали все ваши любимые роллы в один Фирменный сет и добавили то, чего нет ни у
-              кого.
-            </div>
+              v-html="promo.content"
+            ></div>
           </div>
         </div>
       </div>

@@ -1,26 +1,11 @@
 <script setup lang="ts">
-  const props = defineProps({
-    title: {
-      type: String,
-      default: 'Заголовок формы',
-    },
-    buttonText: {
-      type: String,
-      default: 'Текст кнопки',
-    },
-    handler: {
-      type: Function,
-      required: true,
-    },
-    callback: {
-      type: Function,
-      required: true,
-    },
-    refresh: {
-      type: Function,
-      required: true,
-    },
-  });
+  interface Props {
+    title?: string;
+    handler: Function;
+    refresh: Function;
+  }
+
+  const { title = 'заголовок формы', handler, refresh } = defineProps<Props>();
 
   const serverError = ref<string>();
   const isSubmitting = ref(false);
@@ -28,8 +13,8 @@
   async function onSubmit() {
     isSubmitting.value = true;
     try {
-      await props.handler();
-      await props.refresh();
+      await handler();
+      await refresh();
     } catch (e) {
       serverError.value = (e as Error).message;
     }

@@ -1,9 +1,10 @@
 import { prisma } from '@/../server/utils/prisma';
-import { createCategorySchema } from '@/entities/category';
+import { categorySchema } from '@/entities/category';
+import { validateEntityExist } from '#server/utils/validate-entity-exist';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const result = createCategorySchema.safeParse(body);
+  const result = categorySchema.safeParse(body);
 
   if (!result.success) {
     throw createError({
@@ -14,18 +15,11 @@ export default defineEventHandler(async (event) => {
 
   const data = result.data;
 
-  const exists = await prisma.category.findUnique({
-    where: {
-      slug: data.slug,
-    },
-  });
-
-  if (exists) {
-    throw createError({
-      status: 409,
-      message: 'Категория с таким slug уже существует',
-    });
-  }
+  await validateEntityExist(
+    (args) => prisma.category.findUnique(args),
+    { where: { slug: data.slug } },
+    'Категории с таким slug не существует'
+  );
 
   return prisma.category.create({
     data,

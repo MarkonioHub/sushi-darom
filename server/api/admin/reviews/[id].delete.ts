@@ -1,19 +1,15 @@
-import { unlink } from 'node:fs/promises';
-import { getImagePath } from '#server/utils/get-image-path';
+import { deleteFile } from '#server/utils/delete-file';
+import { validateEntityExist } from '#server/utils/validate-entity-exist';
+import { prisma } from '#server/utils/prisma';
 
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
 
-  const review = await prisma.review.findUnique({
-    where: { id: id },
-  });
-
-  if (!review) {
-    throw createError({
-      status: 404,
-      message: 'Отзыва с таким id не существует',
-    });
-  }
+  const review = await validateEntityExist(
+    (args) => prisma.review.findUnique(args),
+    { where: { id } },
+    'Отзыва с таким id не существует'
+  );
 
   await prisma.review.delete({
     where: {
@@ -21,12 +17,5 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  if (review.file) {
-    const imagePath = getImagePath(review.file);
-    try {
-      await unlink(imagePath);
-    } catch (error) {
-      console.log('Не удалось удалить файл отзыва: ', error);
-    }
-  }
+  await deleteFile(review.file);
 });

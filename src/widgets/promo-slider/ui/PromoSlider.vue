@@ -1,6 +1,12 @@
 <script setup lang="ts">
   import type { SwiperContainer } from 'swiper/element';
-  import { usePromoModal } from '@/entities/promo';
+  import { type Promo } from '@/entities/promo';
+  import { usePromoModal } from '@/entities/promo/composables';
+
+  interface Props {
+    promos: Promo[];
+  }
+  const { promos } = defineProps<Props>();
 
   const containerRef = useTemplateRef<SwiperContainer>('containerRef');
   const disablePrev = ref(true);
@@ -118,8 +124,9 @@
             ref="containerRef"
             slides-per-view="auto"
             space-between="10"
+            :loop="true"
             :init="false"
-            class="-mx-[16px] overflow-visible px-[16px]"
+            :class="['-mx-[16px]', 'overflow-visible', 'px-[16px]']"
             :pagination="{
               clickable: true,
             }"
@@ -129,16 +136,12 @@
               },
             }"
           >
-            <swiper-slide
-              v-for="(slide, idx) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-              :key="idx"
-              class="!w-[200px] lg:!w-[300px]"
-            >
+            <swiper-slide v-for="promo in promos" :key="promo.id" class="!w-[200px] lg:!w-[300px]">
               <div
                 class="block cursor-pointer overflow-hidden rounded-[16px]"
-                @click="pushQuery('1')"
+                @click="pushQuery(promo.slug)"
               >
-                <NuxtImg src="/examples/promo-vertical.png"></NuxtImg>
+                <NuxtImg :src="promo.imageVertical"></NuxtImg>
               </div>
             </swiper-slide>
           </swiper-container>

@@ -1,16 +1,14 @@
+import { validateEntityExist } from '#server/utils/validate-entity-exist';
+import { prisma } from '#server/utils/prisma';
+
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
 
-  const category = await prisma.category.findUnique({
-    where: { id: id },
-  });
-
-  if (!category) {
-    throw createError({
-      status: 404,
-      message: 'Категория с таким id не существует',
-    });
-  }
+  await validateEntityExist(
+    (args) => prisma.category.findUnique(args),
+    { where: { id } },
+    'Категории с таким id не существует'
+  );
 
   await prisma.category.delete({
     where: {

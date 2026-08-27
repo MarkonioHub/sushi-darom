@@ -1,12 +1,7 @@
 <script setup lang="ts">
   import { InputSite } from '@/shared/ui/input-site';
   import { useModalStore } from '@/shared/ui/modal-base';
-  import {
-    categoryApi,
-    useCategoryStore,
-    createCategorySchema,
-    categorySchema,
-  } from '@/entities/category';
+  import { categoryApi, useCategoryStore, categorySchema } from '@/entities/category';
   import type { Category } from '@/entities/category';
 
   interface Props {
@@ -16,25 +11,22 @@
     category?: Category;
   }
 
+  interface CategoryForm {
+    name: string;
+    slug: string;
+    isActive: boolean;
+  }
+
   const { title = 'Заголовок формы', buttonText = 'Текст кнопки', category } = defineProps<Props>();
 
-  const initialValues = category?.id
-    ? {
-        id: category?.id || undefined,
-        name: category?.name || '',
-        slug: category?.slug || '',
-      }
-    : {
-        name: category?.name || '',
-        slug: category?.slug || '',
-      };
-
-  const validationSchema = category?.id
-    ? toTypedSchema(categorySchema)
-    : toTypedSchema(createCategorySchema);
+  const initialValues: CategoryForm = {
+    name: category?.name ?? '',
+    slug: category?.slug ?? '',
+    isActive: category?.isActive ?? true,
+  };
 
   const { handleSubmit, errors, defineField, handleReset, isSubmitting, setFieldError } = useForm({
-    validationSchema: validationSchema,
+    validationSchema: toTypedSchema(categorySchema),
     initialValues: initialValues,
   });
 

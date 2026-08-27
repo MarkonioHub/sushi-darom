@@ -21,8 +21,7 @@ export interface CreateProduct {
   name: string;
   slug: string;
   categoryId?: string;
-  image?: string;
-  imageFile?: File | null | undefined;
+  image?: File | null | undefined;
   description?: string;
   allergens?: string;
   compound?: string;
@@ -40,8 +39,7 @@ export interface UpdateProduct {
   name: string;
   slug: string;
   categoryId?: string;
-  image?: string;
-  imageFile?: File | null | undefined;
+  image?: File | null | undefined;
   description?: string;
   allergens?: string;
   compound?: string;

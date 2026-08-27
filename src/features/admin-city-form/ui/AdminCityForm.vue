@@ -2,7 +2,7 @@
   import { InputSite } from '@/shared/ui/input-site';
   import { vMaska } from 'maska/vue';
   import { useModalStore } from '@/shared/ui/modal-base';
-  import { cityApi, useCityStore, createCitySchema, citySchema } from '@/entities/city';
+  import { cityApi, useCityStore, citySchema } from '@/entities/city';
   import type { City } from '@/entities/city';
 
   interface Props {
@@ -12,32 +12,28 @@
     city?: City;
   }
 
+  interface CityForm {
+    name: string;
+    slug: string;
+    phone: string;
+  }
+
   const props = withDefaults(defineProps<Props>(), {
     title: 'Заголовок формы',
     buttonText: 'Текст кнопки',
   });
 
-  const initialValues = props.city?.id
-    ? {
-        id: props.city?.id || undefined,
-        name: props.city?.name || '',
-        slug: props.city?.slug || '',
-        phone: props.city?.phone || '',
-      }
-    : {
-        name: props.city?.name || '',
-        slug: props.city?.slug || '',
-        phone: props.city?.phone || '',
-      };
+  const initialValues: CityForm = {
+    name: props.city?.name ?? '',
+    slug: props.city?.slug ?? '',
+    phone: props.city?.phone ?? '',
+  };
 
-  const validationSchema = props.city?.id
-    ? toTypedSchema(citySchema)
-    : toTypedSchema(createCitySchema);
-
-  const { handleSubmit, errors, defineField, handleReset, isSubmitting, setFieldError } = useForm({
-    validationSchema: validationSchema,
-    initialValues: initialValues,
-  });
+  const { handleSubmit, errors, defineField, handleReset, isSubmitting, setFieldError } =
+    useForm<CityForm>({
+      validationSchema: toTypedSchema(citySchema),
+      initialValues: initialValues,
+    });
 
   const modalStore = useModalStore();
   const cityStore = useCityStore();

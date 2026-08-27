@@ -1,12 +1,22 @@
 <script setup lang="ts">
+  import { fetchPromo } from '../model/api';
+
   const route = useRoute();
-  const slug = route.query?.promo;
+
+  const slug = computed(() => {
+    return typeof route.query.promo === 'string' ? route.query.promo : '';
+  });
+
+  const { data: promo } = await useAsyncData(
+    () => `promo-modal-${slug.value}`,
+    () => fetchPromo(slug.value)
+  );
 </script>
 
 <template>
-  <div :class="['flex', 'flex-col']">
-    <NuxtImg src="examples/promo-horizontal.png"></NuxtImg>
-    <div class="grow overflow-y-auto p-[15px] lg:p-[30px]">
+  <div v-if="promo" :class="['flex', 'flex-col', 'max-h-[80vh]']">
+    <NuxtImg :src="promo.imageHorizontal" />
+    <div :class="['grow', 'overflow-y-auto', 'p-[15px]', 'lg:p-[30px]']">
       <div
         :class="[
           'mb-[10px]',
@@ -18,7 +28,7 @@
           'lg:leading-[38px]',
         ]"
       >
-        УСПЕЙ ВЗЯТЬ ЭКСКЛЮЗИВ!
+        {{ promo.name }}
       </div>
       <div
         :class="[
@@ -28,17 +38,11 @@
           'lg:text-[16px]',
           'lg:leading-[18px]',
         ]"
-      >
-        Мы собрали все ваши любимые роллы в один Фирменный сет и добавили то, чего нет ни у кого.
-        Нет, это не просто соус😍 Это — те самые черные сувенирные палочки от СУШИ ДАРОМ💞
-        Эксклюзив, который невозможно купить отдельно. 💥 48 топовых роллов: от классики с лососем
-        до запеченных хитов. 💥 Выгода 50%: ты платишь только половину стоимости — всего 1499₽.
-        💥Лимитированный подарок: Стильные, чёрные, фирменные палочки, которые останутся у тебя как
-        символ крутого ужина. ⚠️ Осторожно: сеты с сувениром разлетаются быстро. Количество в каждом
-        городе ограничено!
-      </div>
+        v-html="promo.content"
+      ></div>
     </div>
   </div>
+  <div v-else>Извините, акция не найдена</div>
 </template>
 
 <style scoped></style>

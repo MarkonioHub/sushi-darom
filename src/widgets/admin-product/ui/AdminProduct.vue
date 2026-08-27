@@ -22,6 +22,7 @@
       title: `Редактировать продукт ${product.name}`,
       buttonText: 'Сохранить',
       product: product,
+      refresh: () => refresh(),
     });
   }
 

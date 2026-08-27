@@ -29,14 +29,6 @@
           'object-cover',
         ]"
       />
-      <!--      <div :class="['absolute', 'left-[16px]', 'top-[16px]', 'flex', 'flex-wrap', 'gap-[5px]']">-->
-      <!--        <div-->
-      <!--          :class="['p-[4px_8px]', 'rounded-[20px]', 'text-[12px]', 'leading-[100%]', 'font-[600]']"-->
-      <!--          style="background: rgb(255, 25, 25); color: rgb(255, 255, 255)"-->
-      <!--        >-->
-      <!--          -50%-->
-      <!--        </div>-->
-      <!--      </div>-->
     </NuxtLink>
     <div
       :class="[
