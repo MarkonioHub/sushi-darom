@@ -1,12 +1,16 @@
 <script setup lang="ts">
   import { type FooterNav, useResize } from '@/shared/lib';
   import { useAccordion } from '@/shared/lib';
+  import { useModalStore } from '@/shared/ui/modal-base';
+  import { CookieModal } from '@/features/cookie-settings';
 
   interface Props {
     box: FooterNav;
   }
 
-  const props = defineProps<Props>();
+  const { box } = defineProps<Props>();
+  const modalStore = useModalStore();
+
   const { toggle, isOpen } = useAccordion();
 
   const isDesktop = ref<boolean>();
@@ -20,6 +24,14 @@
   const accordionIsOpen = () => {
     return isOpen() || isDesktop.value;
   };
+
+  function handleAction(action: string) {
+    switch (action) {
+      case 'cookie-modal': {
+        modalStore.open(CookieModal, 'middle');
+      }
+    }
+  }
 </script>
 
 <template>
@@ -43,7 +55,7 @@
     ]"
     @click="toggle()"
   >
-    {{ props.box.title }}
+    {{ box.title }}
     <IconApp
       name="app:plus"
       :class="
@@ -54,7 +66,7 @@
   </div>
   <transition name="accordion">
     <div v-show="accordionIsOpen()" :class="['flex', 'flex-col']">
-      <template v-for="item in props.box.list" :key="item.text">
+      <template v-for="item in box.list" :key="item.text">
         <NuxtLink
           v-if="item.type === 'link'"
           :to="item.to"
@@ -72,7 +84,7 @@
           {{ item.text }}
         </NuxtLink>
         <a
-          v-else
+          v-if="item.type === 'external'"
           :href="item.href"
           target="_blank"
           rel="noreferrer"
@@ -89,6 +101,25 @@
         >
           {{ item.text }}
         </a>
+        <button
+          v-else-if="item.type === 'button'"
+          @click="() => handleAction(item.action)"
+          :class="[
+            'ml-[-8px]',
+            'p-[8px]',
+            'text-[16px]',
+            'text-left',
+            'leading-[20px]',
+            'text-center',
+            'md:text-left',
+            'text-[var(--color-secondary)]',
+            'transition-colors',
+            'duration-[var(--transition-duration)]',
+            'hover:text-[var(--color-primary)]',
+          ]"
+        >
+          {{ item.text }}
+        </button>
       </template>
     </div>
   </transition>

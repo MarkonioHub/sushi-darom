@@ -25,7 +25,7 @@
     'fixed',
     'left-[0]',
     'top-[0]',
-    'z-[1001]',
+    'z-[var(--z-index-modal)]',
     'w-[100%]',
     'h-[100%]',
     'flex',

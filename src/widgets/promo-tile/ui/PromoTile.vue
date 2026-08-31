@@ -11,7 +11,7 @@
 </script>
 
 <template>
-  <div :class="['mb-[80px]']">
+  <section :class="['mb-[80px]']">
     <ContainerSite>
       <TitleSite :class="['mb-[30px]']" :tag="'h1'">Акции</TitleSite>
       <div :class="['flex', 'flex-wrap', 'sm:gap-[20px]', 'gap-[10px]']">
@@ -70,7 +70,7 @@
         </div>
       </div>
     </ContainerSite>
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

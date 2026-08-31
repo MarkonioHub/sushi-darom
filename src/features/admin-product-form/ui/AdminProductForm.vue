@@ -22,7 +22,6 @@
   });
 
   interface Props {
-    id?: string;
     title?: string;
     buttonText?: string;
     product?: Product;

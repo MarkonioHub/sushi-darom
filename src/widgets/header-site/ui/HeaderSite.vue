@@ -170,7 +170,7 @@
           </div>
         </div>
         <div
-          @click="modalStore.open(LoginModal, 'small', {})"
+          @click="modalStore.open(LoginModal, 'small')"
           :class="[
             'group',
             'order-3',

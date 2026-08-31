@@ -6,6 +6,7 @@
   import { MobileMenu } from '@/widgets/mobile-menu';
   import { ModalBase } from '@/shared/ui/modal-base';
   import { OverlaySite } from '@/shared/ui/overlay-site';
+  import { CookieInformer } from '@/features/cookie-settings';
 </script>
 
 <template>
@@ -20,6 +21,7 @@
     <MobileMenu />
     <OverlaySite />
     <ModalBase />
+    <CookieInformer />
   </div>
 </template>
 

@@ -5,7 +5,6 @@
   import type { Category } from '@/entities/category';
 
   interface Props {
-    id?: string;
     title?: string;
     buttonText?: string;
     category?: Category;

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-  type ButtonVariant = 'primary' | 'secondary';
+  type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+  type ButtonSize = 'normal' | 'small';
 
   type Props =
-    | { type: 'link'; to: string; href?: never; variant?: ButtonVariant }
-    | { type: 'external'; href: string; to?: never; variant?: ButtonVariant }
+    | { type: 'link'; to: string; href?: never; variant?: ButtonVariant; size?: ButtonSize }
+    | { type: 'external'; href: string; to?: never; variant?: ButtonVariant; size?: ButtonSize }
     | {
         type: 'button';
         variant?: ButtonVariant;
+        size?: ButtonSize;
         buttonType?: 'submit' | 'button';
         disabled?: boolean;
         href?: never;
@@ -16,6 +18,7 @@
   const props = defineProps<Props>();
 
   const variant = props.variant || 'primary';
+  const size = props.size || 'normal';
   const buttonType = props.type === 'button' ? props.buttonType || 'button' : undefined;
 
   const variantStyles: Record<ButtonVariant, string[]> = {
@@ -34,14 +37,28 @@
       'transition-colors',
       'duration-[var(--transition-duration)]',
     ],
+    tertiary: [
+      'border',
+      'border-[var(--color-orange)]',
+      'text-[var(--color-orange)]',
+      'bg-[#ffffff]',
+      'hover:text-[var(--color-orange-hover)]',
+      'hover:border-[var(--color-orange-hover)]',
+      'transition-colors',
+      'duration-[var(--transition-duration)]',
+    ],
+  };
+
+  const sizeStyles: Record<ButtonSize, string[]> = {
+    normal: ['text-[16px]', 'p-[12px_32px]'],
+    small: ['text-[13px]', 'p-[10px_18px]'],
   };
 
   const className = computed(() => [
     ...variantStyles[variant],
-    'text-[16px]',
+    ...sizeStyles[size],
     'no-underline',
     'rounded-[8px]',
-    'p-[12px_32px]',
     'inline-flex',
     'justify-center',
     'font-[600]',

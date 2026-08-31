@@ -18,7 +18,7 @@
           'text-center',
           'md:flex-row',
           'md:items-start',
-          'md:gap-[40px]',
+          'md:gap-[30px]',
           'md:text-left',
         ]"
       >

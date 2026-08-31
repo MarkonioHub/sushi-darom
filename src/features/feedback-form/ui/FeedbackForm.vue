@@ -87,7 +87,7 @@
 
   const onSubmit = handleSubmit(async (values) => {
     await createReview(values);
-    await modalStore.open(ReviewThanks, 'small', {});
+    await modalStore.open(ReviewThanks, 'small');
     handleReset();
   });
 

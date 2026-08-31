@@ -8,6 +8,7 @@
   }
   const { promos } = defineProps<Props>();
 
+  const { $yandexMetrika } = useNuxtApp();
   const containerRef = useTemplateRef<SwiperContainer>('containerRef');
   const disablePrev = ref(true);
   const disableNext = ref(false);
@@ -60,6 +61,11 @@
       disableNext.value = swiper.isEnd;
     }
   });
+
+  function slideClickHandler(slug: string) {
+    pushQuery(slug);
+    $yandexMetrika.reachGoal('promo_slide_clicked', { slug });
+  }
 </script>
 
 <template>
@@ -75,7 +81,7 @@
             'opacity-0',
             'absolute',
             'left-0',
-            'top-[50%]',
+            'top-[calc(50%-15px)]',
             'z-[2]',
             'translate-x-[-50%]',
             'translate-y-[-50%]',
@@ -102,7 +108,7 @@
             'opacity-0',
             'absolute',
             'right-0',
-            'top-[50%]',
+            'top-[calc(50%-15px)]',
             'z-[2]',
             'translate-x-[50%]',
             'translate-y-[-50%]',
@@ -139,7 +145,7 @@
             <swiper-slide v-for="promo in promos" :key="promo.id" class="!w-[200px] lg:!w-[300px]">
               <div
                 class="block cursor-pointer overflow-hidden rounded-[16px]"
-                @click="pushQuery(promo.slug)"
+                @click="slideClickHandler(promo.slug)"
               >
                 <NuxtImg :src="promo.imageVertical"></NuxtImg>
               </div>

@@ -20,7 +20,7 @@
 </script>
 
 <template>
-  <div :class="['lg:mb-[80px]', 'mb-[40px]']">
+  <section :class="['lg:mb-[80px]', 'mb-[40px]']">
     <ContainerSite>
       <div
         :class="[
@@ -275,7 +275,7 @@
         </li>
       </ul>
     </ContainerSite>
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

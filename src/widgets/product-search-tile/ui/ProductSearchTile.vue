@@ -14,7 +14,7 @@
     class="mb-[80px] mt-[40px] scroll-mt-[calc(var(--header-height)+var(--header-category-nav))]"
   >
     <ContainerSite>
-      <TitleSite class="mb-[20px]" :variant="'secondary'" :tag="'h3'">Результаты поиска</TitleSite>
+      <TitleSite class="mb-[20px]" :variant="'secondary'" :tag="'h1'">Результаты поиска</TitleSite>
       <div :class="['flex', 'flex-wrap', 'gap-[40px_20px]']">
         <ProductItem
           v-for="(product, index) in products"

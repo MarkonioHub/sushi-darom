@@ -9,7 +9,7 @@
 
 <template>
   <div :class="['border-b', 'border-[var(--border-color)]', 'p-[20px_0]']">
-    <div :class="['pb-[10px]', 'cursor-pointer', 'flex', 'justify-between']" @click="toggle()">
+    <div :class="['pb-[10px]', 'cursor-pointer', 'flex', 'justify-between']" @click="toggle">
       <div :class="['text-[20px]', 'font-[700]']">{{ title }}</div>
       <IconApp
         name="app:plus"

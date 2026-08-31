@@ -9,13 +9,13 @@ export const useModalStore = defineStore('modal', () => {
   const size = ref<string>('');
   const componentProps = ref({});
 
-  async function open(modalComponent: any, modalSize: string, props: {}) {
+  async function open(modalComponent: any, modalSize: string, props?: {}) {
     await nextTick();
     component.value = modalComponent;
     isOpen.value = true;
     size.value = modalSize;
     overlayStore.open();
-    componentProps.value = props;
+    if (props) componentProps.value = props;
   }
 
   function close() {

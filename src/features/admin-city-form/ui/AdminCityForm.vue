@@ -6,7 +6,6 @@
   import type { City } from '@/entities/city';
 
   interface Props {
-    id?: string;
     title?: string;
     buttonText?: string;
     city?: City;
@@ -18,15 +17,12 @@
     phone: string;
   }
 
-  const props = withDefaults(defineProps<Props>(), {
-    title: 'Заголовок формы',
-    buttonText: 'Текст кнопки',
-  });
+  const { title = 'Заголовок формы', buttonText = 'Текст кнопки', city } = defineProps<Props>();
 
   const initialValues: CityForm = {
-    name: props.city?.name ?? '',
-    slug: props.city?.slug ?? '',
-    phone: props.city?.phone ?? '',
+    name: city?.name ?? '',
+    slug: city?.slug ?? '',
+    phone: city?.phone ?? '',
   };
 
   const { handleSubmit, errors, defineField, handleReset, isSubmitting, setFieldError } =
@@ -61,7 +57,7 @@
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const id = props.city?.id;
+      const id = city?.id;
       if (id) {
         await cityApi.update(id, values);
       } else {
@@ -78,7 +74,7 @@
 
 <template>
   <form @submit="onSubmit" :class="['flex', 'flex-col', 'gap-[24px]', 'p-[60px_40px]']">
-    <TitleSite :variant="'secondary'">{{ props.title }}</TitleSite>
+    <TitleSite :variant="'secondary'">{{ title }}</TitleSite>
     <div :class="['w-[100%]']">
       <InputSite
         @input="clearError('name')"
@@ -139,7 +135,7 @@
         :disabled="isSubmitting"
         :buttonType="'submit'"
       >
-        {{ props.buttonText }}
+        {{ buttonText }}
       </ButtonSite>
     </div>
     <div v-if="serverError">

@@ -17,7 +17,7 @@
   <transition name="fade">
     <div
       v-show="overlayStore.visible"
-      class="fixed inset-0 z-[999] cursor-pointer bg-[rgba(19,23,27,0.4)]"
+      class="fixed inset-0 z-[var(--z-index-overlay)] cursor-pointer bg-[rgba(19,23,27,0.4)]"
       @click="close"
     ></div>
   </transition>

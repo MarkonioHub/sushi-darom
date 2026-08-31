@@ -39,6 +39,10 @@
       behavior: 'smooth',
     });
   });
+
+  function categoryClickHandler(slug: string) {
+    if (!isDragging) scrollToCategory(slug);
+  }
 </script>
 
 <template>
@@ -76,7 +80,7 @@
           <li
             v-for="category in categories"
             :key="category.id"
-            @click="!isDragging && scrollToCategory(category.slug)"
+            @click="() => categoryClickHandler(category.slug)"
             :ref="(el) => setCategoryTab(el, category.slug)"
             :class="[
               'snap-start',

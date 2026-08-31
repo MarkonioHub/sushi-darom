@@ -14,6 +14,13 @@
     productApi.getBySlug(typeof slug === 'string' ? slug : '')
   );
 
+  if (!product.value) {
+    throw createError({
+      status: 404,
+      message: 'Продукт не найден',
+    });
+  }
+
   useSeoMeta({
     title: product.value
       ? `Заказать ${product.value.name}`

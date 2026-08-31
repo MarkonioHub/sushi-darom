@@ -42,7 +42,7 @@
 </script>
 
 <template>
-  <div :class="['lg:mb-[80px]', 'mb-[40px]']">
+  <section :class="['lg:mb-[80px]', 'mb-[40px]']">
     <ContainerSite>
       <h1 :class="['lg:text-[32px]', 'font-[600]', 'mb-[16px]', 'text-[24px]', 'mb-[8px]']">
         Доставка и самовывоз
@@ -126,7 +126,7 @@
       </div>
       <MapDelivery />
     </ContainerSite>
-  </div>
+  </section>
 </template>
 
 <style scoped></style>

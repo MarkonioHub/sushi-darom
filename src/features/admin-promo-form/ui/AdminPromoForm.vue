@@ -11,7 +11,6 @@
   import { TextareaSite } from '~/shared/ui/textarea-site';
 
   interface Props {
-    id?: string;
     title?: string;
     buttonText?: string;
     promo?: Promo;

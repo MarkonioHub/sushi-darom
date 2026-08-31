@@ -1,6 +1,7 @@
 type FooterNavItem =
   | { type: 'link'; text: string; to: string }
-  | { type: 'external'; text: string; href: string };
+  | { type: 'external'; text: string; href: string }
+  | { type: 'button'; text: string; action: string };
 
 export interface FooterNav {
   title: string;
@@ -28,6 +29,11 @@ export const FOOTER_NAV: FooterNav[] = [
         text: 'Согласие на информационную рассылку',
         href: '/doc/communication.pdf',
         type: 'external',
+      },
+      {
+        text: 'Настройки cookie',
+        type: 'button',
+        action: 'cookie-modal',
       },
     ],
   },
