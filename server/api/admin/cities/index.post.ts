@@ -1,6 +1,6 @@
 import { prisma } from '@/../server/utils/prisma';
 import { citySchema } from '@/entities/city';
-import { validateEntityExist } from '#server/utils/validate-entity-exist';
+import { validateDuplicateSlug } from '#server/utils/validate-duplicate-slug';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -15,10 +15,10 @@ export default defineEventHandler(async (event) => {
 
   const data = result.data;
 
-  await validateEntityExist(
-    (args) => prisma.city.findUnique(args),
+  await validateDuplicateSlug(
+    (args) => prisma.city.findFirst(args),
     { where: { slug: data.slug } },
-    'Город с таким slug не существует'
+    'Город с таким slug уже существует'
   );
 
   return prisma.city.create({

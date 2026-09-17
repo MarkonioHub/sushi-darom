@@ -1,12 +1,15 @@
 <script setup lang="ts">
-  import { CONTACTS, HEADER_NAV } from '@/shared/lib';
+  import { HEADER_NAV } from '@/shared/lib';
   import { useMobileMenuStore } from '@/shared/model';
   import { useResize } from '@/shared/lib';
   import { LogoSite } from '@/shared/ui/logo-site';
   import { useOverlayStore } from '@/shared/ui/overlay-site';
+  import { useCityStore } from '@/entities/city';
 
   const mobileMenuStore = useMobileMenuStore();
   const overlayStore = useOverlayStore();
+  const cityStore = useCityStore();
+  const { currentCity } = storeToRefs(cityStore);
 
   function closeMenu() {
     if (!mobileMenuStore.isMobileMenuOpen) return;
@@ -72,11 +75,11 @@
           Оставить отзыв
         </NuxtLink>
         <a
-          :href="`tel:${CONTACTS.phone}`"
+          :href="`tel:${currentCity?.phone}`"
           class="flex items-center gap-[8px] py-[10px] text-[var(--color-secondary)]"
         >
           <IconApp name="app:phone" class="text-[12px]" />
-          {{ CONTACTS.phone }}
+          {{ currentCity?.phone }}
         </a>
       </div>
     </div>

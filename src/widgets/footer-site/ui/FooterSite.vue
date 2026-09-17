@@ -1,7 +1,11 @@
 <script setup lang="ts">
-  import { CONTACTS, SOCIAL_LIST, FOOTER_NAV, MOB_APP } from '@/shared/lib';
+  import { SOCIAL_LIST, FOOTER_NAV, MOB_APP } from '@/shared/lib';
   import { LogoSite } from '@/shared/ui/logo-site';
+  import { useCityStore } from '@/entities/city';
   import FooterAccordion from './FooterAccordion.vue';
+
+  const cityStore = useCityStore();
+  const { currentCity } = storeToRefs(cityStore);
 </script>
 
 <template>
@@ -45,7 +49,7 @@
             ]"
           />
           <a
-            :href="`tel:${CONTACTS.phone}`"
+            :href="`tel:${currentCity?.phone}`"
             :class="[
               'mb-[10px]',
               'text-[20px]',
@@ -57,7 +61,7 @@
               'sm:mb-[20px]',
             ]"
           >
-            {{ CONTACTS.phone }}
+            {{ currentCity?.phone }}
           </a>
           <div
             :class="[

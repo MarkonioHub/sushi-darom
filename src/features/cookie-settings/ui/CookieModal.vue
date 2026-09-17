@@ -4,16 +4,12 @@
   import { useCookieSettings } from '../composables/useCookieSettings';
   import { type CookieAction } from '../model/types';
 
-  const { $yandexMetrika } = useNuxtApp();
   const modalStore = useModalStore();
-  const { cookieConfig, cookieSettings, setCookie } = useCookieSettings();
+  const { cookieSettings, setCookie, initYandexMetrika } = useCookieSettings();
 
   function updateCookie(action: CookieAction) {
     setCookie(action);
-    $yandexMetrika.init({
-      analytics: cookieConfig.analytics.value,
-      marketing: cookieConfig.marketing.value,
-    });
+    initYandexMetrika();
     modalStore.close();
   }
 </script>

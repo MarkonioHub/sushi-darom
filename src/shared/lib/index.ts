@@ -1,4 +1,3 @@
-export { CONTACTS } from './const/contacts';
 export { HEADER_NAV, HEADER_ADMIN_NAV } from './const/header-nav';
 export { FOOTER_NAV } from './const/footer-nav';
 export { SOCIAL_LIST } from './const/social-list';

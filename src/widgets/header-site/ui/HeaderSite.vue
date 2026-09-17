@@ -7,10 +7,11 @@
   import { useOverlayStore } from '@/shared/ui/overlay-site';
   import { LoginModal } from '@/features/login';
   import { InputSite } from '@/shared/ui/input-site';
-  import SearchDropdown from './SearchDropdown.vue';
   import { type ProductSearchResult } from '@/entities/product';
   import { debounce } from '@/shared/lib/utils/debounce';
   import { searchProductsPreview } from '@/entities/product/model/api';
+
+  import SearchDropdown from './SearchDropdown.vue';
 
   const modalStore = useModalStore();
   const { navigateToAnchorScroll } = useAnchorScroll();

@@ -41,7 +41,7 @@
   });
 
   function categoryClickHandler(slug: string) {
-    if (!isDragging) scrollToCategory(slug);
+    if (!isDragging.value) scrollToCategory(slug);
   }
 </script>
 

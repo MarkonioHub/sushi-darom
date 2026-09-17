@@ -1,10 +1,18 @@
 import { type CookieName, type Cookie, type CookieAction } from '../model/types';
 
 export const useCookieSettings = () => {
+  const { $yandexMetrika } = useNuxtApp();
+
   const cookieConfig: Record<CookieName, Ref<boolean | undefined>> = {
-    required: useCookie<boolean | undefined>('required'),
-    analytics: useCookie<boolean | undefined>('analytics'),
-    marketing: useCookie<boolean | undefined>('marketing'),
+    required: useCookie<boolean | undefined>('required', {
+      maxAge: 60 * 60 * 24 * 365,
+    }),
+    analytics: useCookie<boolean | undefined>('analytics', {
+      maxAge: 60 * 60 * 24 * 365,
+    }),
+    marketing: useCookie<boolean | undefined>('marketing', {
+      maxAge: 60 * 60 * 24 * 365,
+    }),
   };
 
   const cookieSettings: Cookie[] = [
@@ -52,9 +60,17 @@ export const useCookieSettings = () => {
     }
   }
 
+  function initYandexMetrika() {
+    $yandexMetrika.init({
+      analytics: cookieConfig.analytics.value || false,
+      marketing: cookieConfig.marketing.value || false,
+    });
+  }
+
   return {
     cookieConfig,
     cookieSettings,
     setCookie,
+    initYandexMetrika,
   };
 };

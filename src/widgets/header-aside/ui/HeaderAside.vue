@@ -1,5 +1,16 @@
 <script setup lang="ts">
-  import { CONTACTS } from '@/shared/lib';
+  import { useCityStore } from '@/entities/city';
+  import { SelectCityModal } from '@/features/select-city-modal';
+  import { useModalStore } from '@/shared/ui/modal-base';
+
+  const modalStore = useModalStore();
+
+  const cityStore = useCityStore();
+  const { currentCity, cityCookie } = storeToRefs(cityStore);
+
+  function openCityModal() {
+    modalStore.open(SelectCityModal, 'middle');
+  }
 </script>
 
 <template>
@@ -17,21 +28,55 @@
           'xl:gap-[60px]',
         ]"
       >
-        <div
-          :class="[
-            'hidden',
-            'cursor-pointer',
-            'items-center',
-            'gap-[8px]',
-            'py-[10px]',
-            'transition-colors',
-            'duration-[var(--transition-duration)]',
-            'hover:text-[var(--color-secondary)]',
-            'lg:flex',
-          ]"
-        >
-          <IconApp name="app:location" :class="['text-[12px]']" />
-          Краснодар
+        <div>
+          <div
+            @click="openCityModal"
+            :class="[
+              'cursor-pointer',
+              'items-center',
+              'gap-[8px]',
+              'py-[10px]',
+              'transition-colors',
+              'duration-[var(--transition-duration)]',
+              'hover:text-[var(--color-secondary)]',
+              'flex',
+            ]"
+          >
+            <IconApp name="app:location" :class="['text-[12px]']" />
+            {{ currentCity?.name }}
+            <IconApp
+              name="app:select-arrow"
+              :class="['h-[16px]', 'w-[16px]', 'shrink-0', 'ml-[-6px]']"
+            />
+          </div>
+          <div
+            v-if="!cityCookie"
+            :class="[
+              'absolute',
+              'z-[21]',
+              'bg-[#ffffff]',
+              'shadow-[0px_-4px_16px_rgba(0,0,0,0.08)]',
+              'p-[10px]',
+            ]"
+          >
+            <div :class="['mb-[10px]']">Ваш город {{ currentCity?.name }}?</div>
+            <ButtonSite
+              :type="'button'"
+              :size="'small'"
+              @click="() => cityStore.setCityCookie(currentCity?.fiasId)"
+            >
+              Верно
+            </ButtonSite>
+            <ButtonSite
+              @click="openCityModal"
+              :type="'button'"
+              :variant="'secondary'"
+              :class="['ml-[10px]']"
+              :size="'small'"
+            >
+              Нет, выбрать другой
+            </ButtonSite>
+          </div>
         </div>
         <div :class="['flex', 'cursor-pointer', 'items-center', 'gap-[8px]', 'lg:py-[10px]']">
           <IconApp name="app:map-pin" :class="['shrink-0', 'text-[17px]']" />
@@ -60,7 +105,7 @@
           Оставить отзыв
         </NuxtLink>
         <a
-          :href="`tel:${CONTACTS.phone}`"
+          :href="`tel:${currentCity?.phone}`"
           :class="[
             'hidden',
             'items-center',
@@ -73,7 +118,7 @@
           ]"
         >
           <IconApp name="app:phone" :class="['text-[12px]']" />
-          {{ CONTACTS.phone }}
+          {{ currentCity?.phone }}
         </a>
       </div>
     </ContainerSite>

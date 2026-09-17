@@ -41,6 +41,10 @@
       label: 'Slug',
     },
     {
+      key: 'fiasId',
+      label: 'fiasId',
+    },
+    {
       key: 'phone',
       label: 'Телефон',
     },

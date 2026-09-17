@@ -1,11 +1,8 @@
-import { useCityStore } from '@/entities/city';
 import { useCategoryStore } from '@/entities/category';
 
 export default defineNuxtPlugin(async () => {
-  const cityStore = useCityStore();
   const categoryStore = useCategoryStore();
-  if (!cityStore.cities.length) {
-    await cityStore.fetchCities();
+  if (!categoryStore.categories.length) {
     await categoryStore.fetchCategories();
   }
 });

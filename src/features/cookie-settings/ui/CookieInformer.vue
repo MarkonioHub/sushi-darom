@@ -5,16 +5,12 @@
   import { CookieModal } from '~/features/cookie-settings';
 
   const modalStore = useModalStore();
-  const { $yandexMetrika } = useNuxtApp();
-  const { cookieConfig, setCookie } = useCookieSettings();
+  const { cookieConfig, setCookie, initYandexMetrika } = useCookieSettings();
 
   function updateCookie(action: CookieAction) {
     setCookie(action);
     if (action !== 'required') {
-      $yandexMetrika.init({
-        analytics: cookieConfig.analytics.value,
-        marketing: cookieConfig.marketing.value,
-      });
+      initYandexMetrika();
     }
   }
 

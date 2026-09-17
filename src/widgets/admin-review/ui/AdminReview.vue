@@ -47,8 +47,6 @@
       key: 'city',
       label: 'Город',
       format: (review) => {
-        console.log(cities.value);
-        console.log(review.city);
         return cities.value.find((city: City) => city.id === review.city)?.name || '';
       },
     },

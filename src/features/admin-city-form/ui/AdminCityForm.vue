@@ -15,6 +15,7 @@
     name: string;
     slug: string;
     phone: string;
+    fiasId: string;
   }
 
   const { title = 'Заголовок формы', buttonText = 'Текст кнопки', city } = defineProps<Props>();
@@ -23,6 +24,7 @@
     name: city?.name ?? '',
     slug: city?.slug ?? '',
     phone: city?.phone ?? '',
+    fiasId: city?.fiasId ?? '',
   };
 
   const { handleSubmit, errors, defineField, handleReset, isSubmitting, setFieldError } =
@@ -48,8 +50,12 @@
     validateOnInput: false,
     validateOnBlur: false,
   });
+  const [fiasId, fiasIdProps] = defineField('fiasId', {
+    validateOnModelUpdate: false,
+    validateOnBlur: false,
+  });
 
-  const clearError = (field: 'name' | 'slug' | 'phone') => {
+  const clearError = (field: 'name' | 'slug' | 'phone' | 'fiasId') => {
     if (errors.value[field]) {
       setFieldError(field, undefined);
     }
@@ -95,12 +101,26 @@
         v-bind="slugProps"
         v-model="slug"
         :type="'text'"
-        :name="'name'"
+        :name="'slug'"
         :placeholder="'Слаг'"
         :class="['w-[100%]', errors.slug ? 'border-[var(--color-error)]' : '']"
       />
       <div v-if="errors.slug" :class="['text-[var(--color-error)]', 'mt-[4px]']">
         {{ errors.slug }}
+      </div>
+    </div>
+    <div :class="['w-[100%]']">
+      <InputSite
+        @input="clearError('fiasId')"
+        v-bind="fiasIdProps"
+        v-model="fiasId"
+        :type="'text'"
+        :name="'fiasId'"
+        :placeholder="'айди для геолокации ip'"
+        :class="['w-[100%]', errors.fiasId ? 'border-[var(--color-error)]' : '']"
+      />
+      <div v-if="errors.fiasId" :class="['text-[var(--color-error)]', 'mt-[4px]']">
+        {{ errors.fiasId }}
       </div>
     </div>
     <div :class="['w-[100%]']">

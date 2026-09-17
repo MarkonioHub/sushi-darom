@@ -2,6 +2,7 @@ model City {
   id String @id @default(cuid())
   name String
   slug String @unique
+  fiasId String @unique
   phone String
   restaurants Restaurant[]
   createdAt DateTime @default(now())

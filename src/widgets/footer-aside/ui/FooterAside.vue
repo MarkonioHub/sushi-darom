@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { useCityStore } from '@/entities/city';
+
+  const cityStore = useCityStore();
+  const { currentCity } = storeToRefs(cityStore);
+</script>
 
 <template>
   <div
@@ -13,9 +18,8 @@
     <div :class="['text-center', 'leading-[20px]', 'opacity-[0.5]']">
       {{ new Date().getFullYear() }} ©
     </div>
-    <div :class="['text-center', 'leading-[20px]', 'opacity-[0.5]']">ИП lorem ipsum</div>
-    <div :class="['text-center', 'leading-[20px]', 'opacity-[0.5]']">
-      Адрес регистрации: г. Краснодар
+    <div :class="['text-center', 'leading-[20px]', 'opacity-[0.5]']" v-if="currentCity">
+      Адрес регистрации: г. {{ currentCity.name }}
     </div>
   </div>
 </template>

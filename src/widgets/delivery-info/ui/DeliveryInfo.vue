@@ -1,44 +1,18 @@
 <script setup lang="ts">
-  import { CONTACTS } from '@/shared/lib';
   import { MapDelivery } from '@/shared/ui/map-delivery';
+  import { useCityStore } from '@/entities/city';
+  import { getRestaurantsByCityId } from '@/entities/restaurant';
 
-  const pickupList = [
+  const cityStore = useCityStore();
+  const { currentCity } = storeToRefs(cityStore);
+
+  const { data: restaurants } = await useAsyncData(
+    'delivery-info',
+    () => getRestaurantsByCityId(currentCity.value?.id || ''),
     {
-      title: 'Краснодар, ул. Лизы Чайкиной, 2/1',
-      time: 'пн-вс: 10:00 - 21:45',
-      info_1: 'ИП Бабаева Лариса Бейтуллаевна',
-      info_2: 'ИНН 230300697524',
-      info_3: 'ОГРН 318237500371822',
-    },
-    {
-      title: 'Краснодар, п. Российский, ул. им. Комарова В.М., 34',
-      time: 'пн-вс: 10:00 - 21:45',
-      info_1: 'ИП Бабаева Лариса Бейтуллаевна',
-      info_2: 'ИНН 230300697524',
-      info_3: 'ОГРН 318237500371822',
-    },
-    {
-      title: 'Краснодар, ул. 1-заречная, 33',
-      time: 'пн-вс: 10:00 - 21:45',
-      info_1: 'ИП Бабаева Лариса Бейтуллаевна',
-      info_2: 'ИНН 230300697524',
-      info_3: 'ОГРН 318237500371822',
-    },
-    {
-      title: 'Краснодар, ул. Котлярова, 21',
-      time: 'пн-вс: 10:00 - 21:45',
-      info_1: 'ИП Пак Игорь Вячеславович',
-      info_2: 'ИНН 233613379170',
-      info_3: 'ОГРН 320237500113072',
-    },
-    {
-      title: 'Краснодар, ул. Карасунская, 98/1',
-      time: 'пн-вс: 10:00 - 21:45',
-      info_1: 'ИП Пак Игорь Вячеславович',
-      info_2: 'ИНН 233613379170',
-      info_3: 'ОГРН 320237500113072',
-    },
-  ];
+      watch: [currentCity],
+    }
+  );
 </script>
 
 <template>
@@ -59,7 +33,9 @@
       >
         <div>Телефон</div>
         <div :class="['flex', 'items-center', 'justify-between']">
-          <a :href="`tel:${CONTACTS.phone}`" :class="['text-[20px]']">{{ CONTACTS.phone }}</a>
+          <a :href="`tel:${currentCity?.phone}`" :class="['text-[20px]']">
+            {{ currentCity?.phone }}
+          </a>
           <IconApp name="app:phone" class="h-[20px] w-[20px]" />
         </div>
       </div>
@@ -77,7 +53,7 @@
         ]"
       >
         <li
-          v-for="(item, index) in pickupList"
+          v-for="(restaurant, index) in restaurants"
           :key="index"
           :class="['flex', 'items-center', 'gap-[10px]', 'xl:w-[30%]', 'w-[100%]', 'md:w-[40%]']"
         >
@@ -97,12 +73,12 @@
             <IconApp name="app:map-pin" class="h-[17px] w-[17px]" />
           </div>
           <div>
-            <div :class="['text-[16px]', 'mb-[4px]']">{{ item.title }}</div>
-            <div>{{ item.time }}</div>
-            <div :class="['text-[var(--color-secondary)]']">{{ item.info_1 }}</div>
+            <div :class="['text-[16px]', 'mb-[4px]']">{{ restaurant.address }}</div>
+            <div>пн-вс: {{ restaurant.openingTime }} - {{ restaurant.closingTime }}</div>
+            <div :class="['text-[var(--color-secondary)]']">{{ restaurant.owner.name }}</div>
             <div>
-              <span :class="['text-[var(--color-secondary)]']">{{ item.info_2 }}</span>
-              <span :class="['text-[var(--color-secondary)]']">{{ item.info_2 }}</span>
+              <span :class="['text-[var(--color-secondary)]']">{{ restaurant.owner.inn }}</span>
+              <span :class="['text-[var(--color-secondary)]']">{{ restaurant.owner.ogrn }}</span>
             </div>
           </div>
         </li>

@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     apikey: import.meta.env.NUXT_PUBLIC_YANDEX_MAPS_API_KEY,
   },
   runtimeConfig: {
+    dadataApiKey: '',
     public: {
       yandexMapsApiKey: '',
     },
